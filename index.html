@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="潘朵拉拾取班表">
+<meta property="og:description" content="天堂W 首領聯合拾取班表">
+<style>:root{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>潘朵拉拾取班表</title>
+<meta name="description" content="天堂W 首領聯合拾取班表（2026/9/14–10/4 新版草案）">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap">
+<style>
+:root {
+  --ground: #EDEFF2;
+  --surface: #FAFBFC;
+  --ink: #19202B;
+  --muted: #586272;
+  --rule: #D3D8E0;
+  --accent: #8A5C10;
+  --weekend: #B03C5A;
+  --accent-soft: color-mix(in oklab, var(--accent) 12%, var(--surface));
+  --col-sel: color-mix(in oklab, var(--accent) 9%, var(--ground));
+  --shadow: 0 1px 0 rgba(20, 28, 40, .04), 0 12px 28px -16px rgba(20, 28, 40, .28);
+
+  --g01: #2E6BD1;
+  --g02: #C23A66;
+  --g03: #C8741A;
+  --g05: #0E8A7C;
+  --g0607: #7B4CCF;
+  --g08: #7E5A3A;
+  --g09: #4B8A2A;
+
+  --f-display: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --f-body: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "Malgun Gothic", system-ui, sans-serif;
+  --f-num: "Chakra Petch", "Noto Sans TC", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0F1219;
+    --surface: #171C26;
+    --ink: #E3E7ED;
+    --muted: #99A2B2;
+    --rule: #283040;
+    --accent: #D8A64D;
+    --weekend: #E98CA3;
+    --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 16px 32px -18px rgba(0, 0, 0, .7);
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0F1219;
+  --surface: #171C26;
+  --ink: #E3E7ED;
+  --muted: #99A2B2;
+  --rule: #283040;
+  --accent: #D8A64D;
+  --weekend: #E98CA3;
+  --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 16px 32px -18px rgba(0, 0, 0, .7);
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font: 15px/1.55 var(--f-body);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); }
+.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* group colour: every chip sets --g, tint and text derive from theme tokens */
+[data-g="01"] { --g: var(--g01); }
+[data-g="02"] { --g: var(--g02); }
+[data-g="03"] { --g: var(--g03); }
+[data-g="05"] { --g: var(--g05); }
+[data-g="06+07"] { --g: var(--g0607); }
+[data-g="08"] { --g: var(--g08); }
+[data-g="09"] { --g: var(--g09); }
+
+/* ---------- header ---------- */
+.top {
+  padding-block: 32px 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 40px;
+}
+.eyebrow { margin: 0; font-size: 12px; letter-spacing: .16em; color: var(--muted); }
+.title-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+h1 {
+  margin: 2px 0 0;
+  font: 900 clamp(36px, 6vw, 54px)/1.05 var(--f-display);
+  letter-spacing: .04em;
+  text-wrap: balance;
+}
+.stamp {
+  display: inline-grid;
+  place-items: center;
+  padding: 4px 9px 5px;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  line-height: 1.25;
+  text-align: center;
+  transform: rotate(-4deg);
+}
+.meta { display: grid; gap: 2px; justify-items: end; color: var(--muted); font-size: 13px; }
+.meta .range { font-size: 20px; font-weight: 600; color: var(--ink); letter-spacing: .02em; }
+@media (max-width: 640px) { .meta { justify-items: start; } }
+
+/* ---------- group picker ---------- */
+.picker { padding-block: 18px 6px; display: grid; gap: 8px; }
+.picker-label { font-size: 12px; letter-spacing: .14em; color: var(--muted); }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; }
+.opt { position: relative; }
+.opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.opt span {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease;
+}
+.opt b { font: 600 16px/1 var(--f-num); color: color-mix(in oklab, var(--g, var(--ink)) 70%, var(--ink)); }
+.opt small { font-size: 12px; color: var(--muted); }
+.opt input:hover + span { border-color: color-mix(in oklab, var(--g, var(--ink)) 45%, var(--rule)); }
+.opt input:checked + span {
+  background: color-mix(in oklab, var(--g, var(--ink)) 14%, var(--surface));
+  border-color: color-mix(in oklab, var(--g, var(--ink)) 70%, var(--surface));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--g, var(--ink)) 70%, var(--surface));
+}
+.opt input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- board ---------- */
+.board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  padding-block: 16px 40px;
+  align-items: start;
+}
+@media (min-width: 980px) {
+  .board { grid-template-columns: minmax(330px, 380px) minmax(0, 1fr); }
+  .day { position: sticky; top: 16px; }
+}
+
+/* ---------- day panel ---------- */
+.day {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.day-head {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.icon-btn {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+.icon-btn:hover:not(:disabled) { background: var(--ground); color: var(--ink); }
+.icon-btn:disabled { opacity: .3; cursor: default; }
+.icon-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.day-date { text-align: center; line-height: 1.15; }
+.day-date .big { font-size: 30px; font-weight: 700; letter-spacing: .01em; }
+.day-date .wd { font-size: 14px; color: var(--muted); margin-left: 6px; }
+.day-date .wd.weekend { color: var(--weekend); }
+.today-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: var(--accent);
+  color: var(--surface);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  vertical-align: 5px;
+}
+.day-status {
+  margin: 0;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--accent-soft);
+  border-bottom: 1px solid var(--rule);
+}
+.day-status strong { color: var(--ink); font-weight: 600; }
+.slots { list-style: none; margin: 0; padding: 0; }
+.slot {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--rule);
+  transition: opacity .2s ease;
+}
+.slot:first-child { border-top: 0; }
+.slot-time { font-size: 17px; font-weight: 600; padding-top: 2px; line-height: 1.2; }
+.slot-time small { display: block; font-size: 11px; font-weight: 500; color: var(--muted); margin-top: 3px; }
+.slot.past { opacity: .45; }
+.slot.next .slot-time { color: var(--accent); }
+.next-tag { display: block; font: 700 11px/1 var(--f-body); letter-spacing: .08em; color: var(--accent); margin-top: 4px; }
+.evs { display: grid; gap: 10px; }
+.ev { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; transition: opacity .2s ease; }
+.ev-name { font-weight: 500; line-height: 1.35; }
+.ev-sub { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+.kind {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 5px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-size: 11px;
+  color: var(--muted);
+  vertical-align: 2px;
+}
+.sigil {
+  width: 46px; height: 50px;
+  display: grid; justify-items: center; align-content: start;
+  padding-top: 11px;
+  clip-path: polygon(0 0, 100% 0, 100% 66%, 50% 100%, 0 66%);
+  background: color-mix(in oklab, var(--g) 20%, var(--surface));
+  color: color-mix(in oklab, var(--g) 66%, var(--ink));
+  font: 700 13px/1 var(--f-num);
+  letter-spacing: -.01em;
+}
+body.filtering .ev.dim { opacity: .32; }
+body.filtering .ev.mine .sigil { background: color-mix(in oklab, var(--g) 34%, var(--surface)); }
+body.filtering .ev.mine .ev-name { font-weight: 700; }
+
+/* ---------- week ---------- */
+.week-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; border-bottom: 1px solid var(--rule); }
+h2 { margin: 0 0 10px; font: 700 22px/1.2 var(--f-display); letter-spacing: .04em; }
+.tabs { display: flex; gap: 2px; }
+.tab {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: transparent;
+  color: var(--muted);
+  font: 600 15px/1 var(--f-num);
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease;
+}
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab .w { font: 500 11px/1 var(--f-body); letter-spacing: .06em; margin-right: 5px; }
+
+.scroll { overflow-x: auto; margin-top: 4px; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 660px; }
+thead th { padding: 0 3px; font-weight: 400; }
+.dh {
+  width: 100%;
+  min-height: 52px;
+  display: grid; place-items: center; align-content: center; gap: 1px;
+  padding: 8px 0 6px;
+  border: 0; border-bottom: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color .15s ease;
+}
+.dh:hover { border-bottom-color: var(--rule); }
+.dh .wd { font-size: 13px; color: var(--muted); }
+.dh .dd { font-size: 15px; font-weight: 600; }
+.dh.weekend .wd, .dh.weekend .dd { color: var(--weekend); }
+.dh.today .wd::after { content: "今天"; margin-left: 4px; font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: .06em; }
+th.sel .dh { border-bottom-color: var(--accent); }
+td.sel, th.sel { background: var(--col-sel); }
+.corner { position: sticky; left: 0; z-index: 2; background: var(--ground); }
+tbody th {
+  position: sticky; left: 0; z-index: 1;
+  width: 176px;
+  padding: 10px 14px 10px 0;
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+  text-align: left;
+  font-weight: 400;
+  vertical-align: middle;
+}
+.rn { display: block; font-weight: 600; line-height: 1.3; word-break: keep-all; overflow-wrap: anywhere; }
+.rs { display: block; font-size: 12px; color: var(--muted); line-height: 1.4; }
+.rk { display: block; font-size: 11px; color: var(--muted); opacity: .8; line-height: 1.4; }
+tbody td { padding: 6px 3px; border-top: 1px solid var(--rule); text-align: center; vertical-align: middle; }
+tr.daily td { padding-block: 10px; }
+.chip {
+  display: block;
+  padding: 10px 0;
+  border-radius: 5px;
+  background: color-mix(in oklab, var(--g) 16%, var(--surface));
+  color: color-mix(in oklab, var(--g) 66%, var(--ink));
+  font: 600 14px/1 var(--f-num);
+  letter-spacing: .01em;
+  transition: opacity .2s ease, background-color .2s ease;
+}
+tr.daily .chip { padding: 14px 0; font-size: 15px; }
+.none { color: var(--muted); opacity: .45; }
+body.filtering .chip.dim { opacity: .26; }
+body.filtering .chip.mine {
+  background: color-mix(in oklab, var(--g) 32%, var(--surface));
+  box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--g) 72%, var(--surface));
+}
+
+/* ---------- below the grid ---------- */
+.under { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; margin-top: 28px; }
+@media (min-width: 760px) { .under { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+h3 { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .12em; color: var(--muted); }
+.mine-list { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 0; }
+.mine-list li { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-top: 1px solid var(--rule); }
+.mine-list li:first-child { border-top: 0; }
+.mine-list .when { font-size: 14px; font-weight: 600; }
+.mine-list .when small { display: block; font: 500 12px/1.3 var(--f-body); color: var(--muted); }
+.mine-empty { margin: 0 0 22px; color: var(--muted); font-size: 14px; }
+
+.pattern { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin-bottom: 10px; max-width: 360px; }
+.pattern span {
+  padding: 9px 0 8px;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+}
+.pattern span small { display: block; font: 500 10px/1.2 var(--f-num); color: var(--muted); margin-bottom: 3px; }
+.pattern span.chip { border-color: transparent; font: 600 14px/1 var(--f-num); }
+.rule-text { margin: 0; font-size: 13.5px; color: var(--muted); max-width: 46ch; }
+.rule-text .num { color: var(--ink); font-weight: 600; }
+
+.tally { width: 100%; min-width: 0; border-collapse: collapse; font-size: 14px; }
+.tally th, .tally td { padding: 7px 8px; text-align: right; border-top: 1px solid var(--rule); }
+.tally thead th { border-top: 0; font-size: 12px; font-weight: 500; color: var(--muted); vertical-align: bottom; line-height: 1.3; }
+.tally th:first-child, .tally td:first-child { text-align: left; padding-left: 0; }
+.tally td:first-child .chip { display: inline-block; width: 58px; text-align: center; padding: 6px 0; font-size: 13px; }
+.tally .grp { border-left: 1px solid var(--rule); }
+.tally tr.hl td { background: var(--accent-soft); }
+.tally-note { margin: 8px 0 0; font-size: 12px; color: var(--muted); }
+
+footer { padding-block: 8px 40px; }
+footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 12.5px; color: var(--muted); max-width: 90ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<headerclass="wrap top">
+  <div>
+    <p class="eyebrow">天堂W · 潘朵拉 · 首領聯合拾取</p>
+    <div class="title-row">
+      <h1>拾取班表</h1>
+      <span class="stamp">新版草案<br>待確認</span>
+    </div>
+  </div>
+  <div class="meta">
+    <span class="range num">2026 / 9/14 – 10/4</span>
+    <span>時間皆為台灣時間 · 韓國時間 +1 小時</span>
+  </div>
+</header>
+
+<section class="wrap picker" aria-labelledby="picker-label">
+  <span class="picker-label" id="picker-label">看哪一團</span>
+  <fieldset class="opts" id="opts"></fieldset>
+</section>
+
+<main class="wrap board">
+  <aside class="day" aria-label="當日首領">
+    <div class="day-head">
+      <button class="icon-btn" id="prev" type="button" aria-label="前一天"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="day-date" id="day-date" aria-live="polite"></div>
+      <button class="icon-btn" id="next" type="button" aria-label="後一天"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <p class="day-status" id="day-status"></p>
+    <ol class="slots" id="slots"></ol>
+  </aside>
+
+  <section aria-labelledby="week-title">
+    <div class="week-head">
+      <h2 id="week-title">一週總覽</h2>
+      <div class="tabs" role="tablist" id="tabs" aria-label="選擇週次"></div>
+    </div>
+    <div class="scroll">
+      <table id="grid">
+        <caption class="sr">每格是當天負責拾取的團</caption>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="under">
+      <div>
+        <h3 id="mine-title">本週負責</h3>
+        <div id="mine"></div>
+        <h3>怎麼輪的</h3>
+        <div class="pattern" aria-label="一輪 5 格">
+          <span><small>1</small>台灣</span>
+          <span class="chip" data-g="02"><small>2</small>02</span>
+          <span class="chip" data-g="03"><small>3</small>03</span>
+          <span><small>4</small>台灣</span>
+          <span><small>5</small>台灣</span>
+        </div>
+        <p class="rule-text">每隻首領都分 5 份：<span class="num">02</span>、<span class="num">03</span> 各 1 份，台灣方 3 份。傲塔／樂園每天走一格；世界首領每隻各自每週走一格，起點錯開。台灣位照 <span class="num">01 → 05 → 06+07 → 08 → 09</span> 一直往下接。</p>
+      </div>
+      <div>
+        <h3>分配統計</h3>
+        <table class="tally" id="tally">
+          <thead>
+            <tr><th>團</th><th>本週<br>傲塔/樂園</th><th>本週<br>世界首領</th><th class="grp">三週<br>傲塔/樂園</th><th>三週<br>世界首領</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p class="tally-note">傲塔/樂園以「天」計；世界首領以「隻」計，雙龍兩天分開算。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>資料來源：潘朵拉試算表「班表(新版)」分頁。9/7–9/13 那週沿用原表，不列入；10/5 起尚未排。試算表裡底比斯、提卡爾同一列，這裡照出現日拆成兩列。夢幻樂園 12:00、23:00 沿用舊表時間，官方公告沒有提到。</p>
+</footer>
+
+<script>
+(function () {
+  var START = Date.UTC(2026, 8, 14);
+  var NDAYS = 21;
+  var WEEKS = [
+    { daily: ["03", "09", "01", "05", "02", "03", "06+07"], world: ["01", "06+07", "08", "05", "03", "02", "02", "03"] },
+    { daily: ["08", "09", "02", "03", "01", "05", "06+07"], world: ["02", "08", "09", "06+07", "01", "03", "03", "05"] },
+    { daily: ["02", "03", "08", "09", "01", "02", "03"], world: ["03", "02", "01", "02", "05", "08", "09", "06+07"] }
+  ];
+  var GROUPS = [
+    { code: "01", label: "台灣" },
+    { code: "02", label: "姐姐血盟 · 韓" },
+    { code: "03", label: "閃電血盟 · 韓" },
+    { code: "05", label: "台灣" },
+    { code: "06+07", label: "台灣 · 同一團" },
+    { code: "08", label: "台灣" },
+    { code: "09", label: "台灣" }
+  ];
+  // world units: index into WEEKS[].world, weekday (0 = Mon)
+  var WORLD = [
+    { wd: 1, t: "15:00", name: "冰之女王", row: "冰之女皇" },
+    { wd: 2, t: "21:00", name: "飛龍王", row: "遺忘-雙龍" },
+    { wd: 2, t: "21:00", name: "歐西里斯", row: "底比斯" },
+    { wd: 3, t: "21:00", name: "古代守護者", row: "遺忘-古代守護者" },
+    { wd: 3, t: "21:00", name: "杰弗雷庫", row: "提卡爾" },
+    { wd: 4, t: "21:00", name: "飛龍王", row: "遺忘-雙龍" },
+    { wd: 5, t: "21:00", name: "亞力安王", row: "遺忘-雞" },
+    { wd: 6, t: "21:00", name: "巨大牛人", row: "遺忘-牛" }
+  ];
+  var ROWS = [
+    { title: "傲塔1-10、樂園+火龍窟", sub: "每天 · 兩列相同", kr: "오만1~10층 / 몽환의 낙원·마토르", daily: true },
+    { title: "冰之女皇", sub: "冰之女王 · 二 15:00", kr: "얼음 여왕", units: [0] },
+    { title: "遺忘-雙龍", sub: "飛龍王 · 三、五 21:00", kr: "드레이크킹", units: [1, 5] },
+    { title: "底比斯", sub: "歐西里斯 · 三 21:00", kr: "오시리스", units: [2] },
+    { title: "提卡爾", sub: "杰弗雷庫 · 四 21:00", kr: "제브 레퀴", units: [4] },
+    { title: "遺忘-古代守護者", sub: "古代守護者 · 四 21:00", kr: "에이션트 가디언", units: [3] },
+    { title: "遺忘-雞", sub: "亞力安王 · 六 21:00", kr: "코카킹", units: [6] },
+    { title: "遺忘-牛", sub: "巨大牛人 · 日 21:00", kr: "미노킹", units: [7] }
+  ];
+  var WDN = "一二三四五六日";
+
+  var state = { day: 0, week: 0, group: "" };
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function md(i) { var d = new Date(START + i * 864e5); return (d.getUTCMonth() + 1) + "/" + d.getUTCDate(); }
+  function mins(t) { var p = t.split(":"); return +p[0] * 60 + +p[1]; }
+
+  function taipeiNow() {
+    var parts = {};
+    new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+      .formatToParts(new Date()).forEach(function (p) { parts[p.type] = p.value; });
+    var idx = Math.round((Date.UTC(+parts.year, +parts.month - 1, +parts.day) - START) / 864e5);
+    return { idx: idx, min: +parts.hour * 60 + +parts.minute };
+  }
+
+  function events(i) {
+    var w = Math.floor(i / 7), wd = i % 7, W = WEEKS[w], D = W.daily;
+    var list = [
+      { t: "12:00", name: "夢幻樂園", sub: "機率出現", g: D[wd] },
+      { t: "17:35", name: "傲塔 1·3·5·7·9F", sub: "傑尼斯、吸血鬼、黑豹、艾莉絲、巫妖", g: D[wd] },
+      { t: "19:10", name: "傲塔 2·4·6·8·10F", sub: "眼魔、殭屍王、木乃伊、范德、烏格奴斯", g: D[wd] }
+    ];
+    WORLD.forEach(function (u, k) {
+      if (u.wd === wd) list.push({ t: u.t, name: u.name, sub: u.row, g: W.world[k], world: true });
+    });
+    list.push({ t: "21:00", name: (wd === 1 || wd === 3 || wd === 5) ? "馬托爾、塔坤" : "馬托爾、不死鳥", sub: "樂園+火龍窟", g: D[wd] });
+    list.push({ t: "23:00", name: "夢幻樂園", sub: "機率出現", g: D[wd] });
+    list.sort(function (a, b) { return mins(a.t) - mins(b.t); });
+    return list;
+  }
+
+  function chipCls(g) {
+    if (!state.group) return "";
+    return g === state.group ? " mine" : " dim";
+  }
+
+  /* ---------- picker ---------- */
+  var opts = document.getElementById("opts");
+  var optHtml = '<legend class="sr">看哪一團</legend>' +
+    '<label class="opt"><input type="radio" name="grp" id="grp-all" value=""><span><b>全部</b></span></label>';
+  GROUPS.forEach(function (g) {
+    var id = "grp-" + g.code.replace("+", "-");
+    optHtml += '<label class="opt" data-g="' + g.code + '"><input type="radio" name="grp" id="' + id + '" value="' + g.code + '"><span><b>' + g.code + '</b><small>' + esc(g.label) + '</small></span></label>';
+  });
+  opts.innerHTML = optHtml;
+  opts.addEventListener("change", function (e) {
+    state.group = e.target.value;
+    try { localStorage.setItem("pandora-group", state.group); } catch (err) {}
+    render();
+  });
+
+  /* ---------- day panel ---------- */
+  function renderDay() {
+    var i = state.day, wd = i % 7, now = taipeiNow(), isToday = now.idx === i;
+    document.getElementById("day-date").innerHTML =
+      '<span class="big num">' + md(i) + '</span>' +
+      '<span class="wd' + (wd >= 5 ? " weekend" : "") + '">週' + WDN[wd] + '</span>' +
+      (isToday ? '<span class="today-tag">今天</span>' : "");
+    document.getElementById("prev").disabled = i === 0;
+    document.getElementById("next").disabled = i === NDAYS - 1;
+
+    var evs = events(i), slots = [];
+    evs.forEach(function (e) {
+      var last = slots[slots.length - 1];
+      if (last && last.t === e.t) last.items.push(e); else slots.push({ t: e.t, items: [e] });
+    });
+    var nextIdx = -1;
+    if (isToday) slots.some(function (s, k) { if (mins(s.t) + 30 > now.min) { nextIdx = k; return true; } return false; });
+
+    var html = "";
+    slots.forEach(function (s, k) {
+      var cls = "slot";
+      if (isToday && (nextIdx === -1 || k < nextIdx)) cls += " past";
+      if (k === nextIdx) cls += " next";
+      html += '<li class="' + cls + '"><div class="slot-time num">' + s.t +
+        '<small>韓 ' + ("0" + (+s.t.slice(0, 2) + 1) % 24).slice(-2) + s.t.slice(2) + '</small>' +
+        (k === nextIdx ? '<span class="next-tag">' + (mins(s.t) <= now.min ? "進行中" : "下一場") + '</span>' : "") +
+        '</div><div class="evs">';
+      s.items.forEach(function (e) {
+        html += '<div class="ev' + chipCls(e.g) + '" data-g="' + e.g + '">' +
+          '<div><div class="ev-name">' + esc(e.name) + (e.world ? '<span class="kind">世界</span>' : "") + '</div>' +
+          '<div class="ev-sub">' + esc(e.sub) + '</div></div>' +
+          '<div class="sigil" aria-label="負責 ' + e.g + '">' + e.g + '</div></div>';
+      });
+      html += "</div></li>";
+    });
+    document.getElementById("slots").innerHTML = html;
+
+    var status;
+    if (state.group) {
+      var n = evs.filter(function (e) { return e.g === state.group; }).length;
+      status = n ? '<strong class="num">' + state.group + '</strong> 這天負責 <strong class="num">' + n + '</strong> 場' : '<strong class="num">' + state.group + '</strong> 這天沒有輪到';
+      if (isToday && nextIdx !== -1) status += " · " + countdown(slots[nextIdx].t, now.min);
+    } else if (isToday) {
+      status = nextIdx === -1 ? "今天的首領都結束了" : countdown(slots[nextIdx].t, now.min);
+    } else {
+      var wc = evs.filter(function (e) { return e.world; }).length;
+      status = "傲塔／樂園由 <strong class=\"num\">" + WEEKS[Math.floor(i / 7)].daily[wd] + "</strong> 負責" + (wc ? " · 世界首領 <strong class=\"num\">" + wc + "</strong> 隻" : " · 沒有世界首領");
+    }
+    document.getElementById("day-status").innerHTML = status;
+  }
+
+  function countdown(t, nowMin) {
+    var diff = mins(t) - nowMin;
+    if (diff <= 0) return '<strong class="num">' + t + '</strong> 那一場正在打';
+    var h = Math.floor(diff / 60), m = diff % 60;
+    return '下一場 <strong class="num">' + t + '</strong>，還有 ' + (h ? '<span class="num">' + h + '</span> 小時 ' : "") + '<span class="num">' + m + '</span> 分';
+  }
+
+  /* ---------- week grid ---------- */
+  function renderWeek() {
+    var w = state.week, W = WEEKS[w], base = w * 7, todayIdx = taipeiNow().idx;
+    document.getElementById("tabs").innerHTML = WEEKS.map(function (_, k) {
+      return '<button class="tab" type="button" role="tab" id="tab-' + k + '" aria-selected="' + (k === w) + '" data-w="' + k + '"><span class="w">第' + "二三四"[k] + '週</span>' + md(k * 7) + '</button>';
+    }).join("");
+
+    var head = '<tr><th class="corner" scope="col"><span class="sr">首領</span></th>';
+    for (var d = 0; d < 7; d++) {
+      var i = base + d, sel = i === state.day ? " sel" : "";
+      head += '<th scope="col" class="' + sel + '"><button type="button" class="dh' + (d >= 5 ? " weekend" : "") + (i === todayIdx ? " today" : "") + '" data-day="' + i + '" aria-pressed="' + (i === state.day) + '">' +
+        '<span class="wd">' + WDN[d] + '</span><span class="dd num">' + md(i) + '</span></button></th>';
+    }
+    document.querySelector("#grid thead").innerHTML = head + "</tr>";
+
+    var body = "";
+    ROWS.forEach(function (r) {
+      body += '<tr' + (r.daily ? ' class="daily"' : "") + '><th scope="row"><span class="rn">' + esc(r.title) + '</span><span class="rs">' + esc(r.sub) + '</span><span class="rk" lang="ko">' + esc(r.kr) + '</span></th>';
+      for (var d = 0; d < 7; d++) {
+        var g = "";
+        if (r.daily) g = W.daily[d];
+        else r.units.forEach(function (k) { if (WORLD[k].wd === d) g = W.world[k]; });
+        var sel = base + d === state.day ? ' class="sel"' : "";
+        body += "<td" + sel + ">" + (g ? '<span class="chip' + chipCls(g) + '" data-g="' + g + '">' + g + "</span>" : '<span class="none" aria-label="無">·</span>') + "</td>";
+      }
+      body += "</tr>";
+    });
+    document.querySelector("#grid tbody").innerHTML = body;
+  }
+
+  /* ---------- mine + tally ---------- */
+  function renderMine() {
+    var w = state.week, W = WEEKS[w], G = state.group, el = document.getElementById("mine");
+    document.getElementById("mine-title").textContent = G ? G + " 本週負責" : "本週負責";
+    if (!G) { el.innerHTML = '<p class="mine-empty">在上方選一個團，就會列出這週輪到它的首領，表格也會只亮出它的格子。</p>'; return; }
+    var items = [];
+    for (var d = 0; d < 7; d++) {
+      var i = w * 7 + d, when = '<span class="when num">' + md(i) + '<small>週' + WDN[d] + '</small></span>';
+      if (W.daily[d] === G) items.push("<li>" + when + '<span>傲塔1-10、樂園+火龍窟 全天<br><span class="ev-sub">17:35 · 19:10 · 21:00，樂園 12:00 · 23:00</span></span></li>');
+      WORLD.forEach(function (u, k) {
+        if (u.wd === d && W.world[k] === G) items.push("<li>" + when + "<span>" + esc(u.row) + '<br><span class="ev-sub">' + esc(u.name) + " · " + u.t + "</span></span></li>");
+      });
+    }
+    el.innerHTML = items.length ? '<ul class="mine-list">' + items.join("") + "</ul>" : '<p class="mine-empty">' + G + " 這週沒有輪到。</p>";
+  }
+
+  function renderTally() {
+    var w = state.week;
+    function count(arr, g) { return arr.filter(function (x) { return x === g; }).length; }
+    document.querySelector("#tally tbody").innerHTML = GROUPS.map(function (g) {
+      var dw = count(WEEKS[w].daily, g.code), ww = count(WEEKS[w].world, g.code), dt = 0, wt = 0;
+      WEEKS.forEach(function (W) { dt += count(W.daily, g.code); wt += count(W.world, g.code); });
+      return '<tr' + (g.code === state.group ? ' class="hl"' : "") + '><td><span class="chip" data-g="' + g.code + '">' + g.code + '</span></td>' +
+        '<td class="num">' + dw + '</td><td class="num">' + ww + '</td><td class="num grp">' + dt + '</td><td class="num">' + wt + "</td></tr>";
+    }).join("");
+  }
+
+  function render() {
+    document.body.classList.toggle("filtering", !!state.group);
+    var input = document.getElementById(state.group ? "grp-" + state.group.replace("+", "-") : "grp-all");
+    if (input) input.checked = true;
+    renderDay(); renderWeek(); renderMine(); renderTally();
+  }
+
+  function setDay(i) {
+    state.day = Math.max(0, Math.min(NDAYS - 1, i));
+    state.week = Math.floor(state.day / 7);
+    render();
+  }
+
+  document.getElementById("prev").addEventListener("click", function () { setDay(state.day - 1); });
+  document.getElementById("next").addEventListener("click", function () { setDay(state.day + 1); });
+  document.getElementById("grid").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-day]");
+    if (b) setDay(+b.getAttribute("data-day"));
+  });
+  document.getElementById("tabs").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-w]");
+    if (!b) return;
+    var w = +b.getAttribute("data-w");
+    setDay(w * 7 + (state.day % 7));
+  });
+
+  try { var saved = localStorage.getItem("pandora-group"); if (saved !== null && (saved === "" || GROUPS.some(function (g) { return g.code === saved; }))) state.group = saved; } catch (err) {}
+  setDay(taipeiNow().idx);
+  setInterval(function () { if (taipeiNow().idx === state.day) renderDay(); }, 30000);
+})();
+</script>
+</body>
+</html>
