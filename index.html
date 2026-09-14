@@ -535,7 +535,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       none: "無",
       tw: "台灣",
       ev: {
-        garden: "夢幻樂園", gardenSub: "機率出現",
+        garden: "夢幻樂園", gardenSub: "水、火、地、風精靈王（機率）",
         odd: "傲塔 1·3·5·7·9F", oddSub: "傑尼斯、吸血鬼、黑豹、艾莉絲、巫妖",
         even: "傲塔 2·4·6·8·10F", evenSub: "眼魔、殭屍王、木乃伊、范德、烏格奴斯",
         matorTakun: "馬托爾、塔坤", matorPhoenix: "馬托爾、不死鳥", matorSub: "樂園+火龍窟"
@@ -549,14 +549,14 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       mineHint: "在上方選一個團，就會列出這週輪到它的首領，表格也會只亮出它的格子。",
       mineNone: function (g) { return g + " 這週沒有輪到。"; },
       mineDaily: "傲塔1-10、樂園+火龍窟 全天",
-      mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + "，樂園 " + f("12:00") + " · " + f("23:00"); },
+      mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + "，樂園 " + f("15:00") + " · " + f("22:00"); },
       ruleTitle: "怎麼輪的",
       rule: "每隻首領都分 5 份：<span class=\"num\">02</span>、<span class=\"num\">03</span> 各 1 份，台灣方 3 份。傲塔／樂園每天走一格；世界首領每隻各自每週走一格，起點錯開。台灣位照 <span class=\"num\">01 → 05 → 06+07 → 08 → 09</span> 一直往下接。",
       patternLabel: "一輪 5 格",
       tallyTitle: "分配統計",
       tallyHead: ["團", "本週<br>傲塔/樂園", "本週<br>世界首領", "三週<br>傲塔/樂園", "三週<br>世界首領"],
       tallyNote: "傲塔/樂園以「天」計；世界首領以「隻」計，雙龍兩天分開算。",
-      footer: "資料來源：潘朵拉試算表「班表(新版)」分頁。9/7–9/13 那週沿用原表，不列入；10/5 起尚未排。試算表裡底比斯、提卡爾同一列，這裡照出現日拆成兩列。夢幻樂園 12:00、23:00 沿用舊表時間，官方公告沒有提到。"
+      footer: "資料來源：潘朵拉試算表「班表(新版)」分頁。9/7–9/13 那週沿用原表，不列入；10/5 起尚未排。試算表裡底比斯、提卡爾同一列，這裡照出現日拆成兩列。夢幻樂園對應公告的水、火、地、風精靈王，9/9 改版後是 15:00、22:00。"
     },
     ko: {
       doc: "판도라 루팅 순번표",
@@ -583,7 +583,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       none: "없음",
       tw: "대만",
       ev: {
-        garden: "몽환의 낙원", gardenSub: "확률 출현",
+        garden: "몽환의 낙원", gardenSub: "물·불·땅·바람의 대정령 (확률)",
         odd: "오만의 탑 1·3·5·7·9층", oddSub: "제니스 퀸, 뱀파이어, 쿠거, 아이리스, 리치",
         even: "오만의 탑 2·4·6·8·10층", evenSub: "시어, 좀비 로드, 머미 로드, 나이트 발드, 우그누스",
         matorTakun: "마토르, 타곤", matorPhoenix: "마토르, 피닉스", matorSub: "몽환의 낙원/마토르/피닉스"
@@ -597,14 +597,14 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       mineHint: "위에서 팀을 선택하면 이번 주에 그 팀이 맡은 보스가 표시되고, 표에서도 해당 칸만 강조됩니다.",
       mineNone: function (g) { return g + " 이번 주 담당 없음."; },
       mineDaily: "오만1~10층, 몽환의 낙원/마토르/피닉스 종일",
-      mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + ", 낙원 " + f("12:00") + " · " + f("23:00"); },
+      mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + ", 낙원 " + f("15:00") + " · " + f("22:00"); },
       ruleTitle: "순번 규칙",
       rule: "모든 보스는 5몫으로 나눕니다: <span class=\"num\">02</span>, <span class=\"num\">03</span> 각 1몫, 대만 측 3몫. 오만/낙원은 하루에 한 칸씩, 월드 보스는 보스마다 매주 한 칸씩 진행하며 시작 위치가 서로 다릅니다. 대만 몫은 <span class=\"num\">01 → 05 → 06+07 → 08 → 09</span> 순서로 계속 이어집니다.",
       patternLabel: "한 바퀴 5칸",
       tallyTitle: "배분 통계",
       tallyHead: ["팀", "이번 주<br>오만/낙원", "이번 주<br>월드 보스", "3주 합계<br>오만/낙원", "3주 합계<br>월드 보스"],
       tallyNote: "오만/낙원은 일수, 월드 보스는 마리 수 기준. 드레이크 킹은 두 요일을 따로 셉니다.",
-      footer: "출처: 판도라 스프레드시트 「班表(新版)」 탭. 9/7–9/13 주는 기존 표를 그대로 써서 제외했고, 10/5부터는 아직 정해지지 않았습니다. 스프레드시트에서는 오시리스와 제브레퀴가 한 줄이지만 여기서는 출현 요일별로 나눴습니다. 몽환의 낙원 13:00, 00:00은 기존 표의 시간이며 공식 공지에는 언급이 없습니다."
+      footer: "출처: 판도라 스프레드시트 「班表(新版)」 탭. 9/7–9/13 주는 기존 표를 그대로 써서 제외했고, 10/5부터는 아직 정해지지 않았습니다. 스프레드시트에서는 오시리스와 제브레퀴가 한 줄이지만 여기서는 출현 요일별로 나눴습니다. 몽환의 낙원은 공지의 물·불·땅·바람의 대정령이며, 09/09 업데이트 후 16:00, 23:00입니다."
     }
   };
 
@@ -631,7 +631,6 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
   function events(i) {
     var w = Math.floor(i / 7), wd = i % 7, W = WEEKS[w], D = W.daily, E = L().ev, lang = state.lang;
     var list = [
-      { t: "12:00", name: E.garden, sub: E.gardenSub, g: D[wd] },
       { t: "17:35", name: E.odd, sub: E.oddSub, g: D[wd] },
       { t: "19:10", name: E.even, sub: E.evenSub, g: D[wd] }
     ];
@@ -639,7 +638,8 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       if (u.wd === wd) list.push({ t: u.t, name: u.name[lang], sub: u.row[lang] !== u.name[lang] ? u.row[lang] : "", g: W.world[k], world: true });
     });
     list.push({ t: "21:00", name: (wd === 1 || wd === 3 || wd === 5) ? E.matorTakun : E.matorPhoenix, sub: E.matorSub, g: D[wd] });
-    list.push({ t: "23:00", name: E.garden, sub: E.gardenSub, g: D[wd] });
+    list.push({ t: "15:00", name: E.garden, sub: E.gardenSub, g: D[wd] });
+    list.push({ t: "22:00", name: E.garden, sub: E.gardenSub, g: D[wd] });
     list.sort(function (a, b) { return mins(a.t) - mins(b.t); });
     return list;
   }
