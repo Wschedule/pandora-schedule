@@ -10,7 +10,7 @@
 <meta name="description" content="天堂W 首領聯合拾取班表（2026/9/14–10/4 新版草案）">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@700;900&display=swap">
 <style>
 :root {
   --ground: #EDEFF2;
@@ -32,10 +32,16 @@
   --g08: #7E5A3A;
   --g09: #4B8A2A;
 
-  --f-display: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-  --f-body: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "Malgun Gothic", system-ui, sans-serif;
-  --f-num: "Chakra Petch", "Noto Sans TC", ui-monospace, monospace;
+  --f-display: "Noto Serif TC", "Noto Serif KR", "Songti TC", "PMingLiU", serif;
+  --f-body: "Noto Sans TC", "Noto Sans KR", "Microsoft JhengHei", "PingFang TC", "Malgun Gothic", system-ui, sans-serif;
+  --f-num: "Chakra Petch", "Noto Sans TC", "Noto Sans KR", ui-monospace, monospace;
 }
+:root[lang="ko"] {
+  --f-display: "Noto Serif KR", "Noto Serif TC", "AppleMyungjo", "Batang", serif;
+  --f-body: "Noto Sans KR", "Noto Sans TC", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --f-num: "Chakra Petch", "Noto Sans KR", "Noto Sans TC", ui-monospace, monospace;
+}
+:root[lang="ko"] body { word-break: keep-all; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --ground: #0F1219;
@@ -111,9 +117,34 @@ h1 {
   text-align: center;
   transform: rotate(-4deg);
 }
-.meta { display: grid; gap: 2px; justify-items: end; color: var(--muted); font-size: 13px; }
+.meta { display: grid; gap: 4px; justify-items: end; color: var(--muted); font-size: 13px; }
 .meta .range { font-size: 20px; font-weight: 600; color: var(--ink); letter-spacing: .02em; }
 @media (max-width: 640px) { .meta { justify-items: start; } }
+.lang {
+  display: inline-flex;
+  margin-bottom: 6px;
+  padding: 3px;
+  border: 1px solid var(--rule);
+  border-radius: 7px;
+  background: var(--surface);
+}
+.lang button {
+  min-height: 38px;
+  min-width: 64px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+.lang button:hover { color: var(--ink); }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.lang button[lang="ko"] { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; }
+.lang button[lang="zh-Hant"] { font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
 
 /* ---------- group picker ---------- */
 .picker { padding-block: 18px 6px; display: grid; gap: 8px; }
@@ -289,7 +320,7 @@ thead th { padding: 0 3px; font-weight: 400; }
 .dh .wd { font-size: 13px; color: var(--muted); }
 .dh .dd { font-size: 15px; font-weight: 600; }
 .dh.weekend .wd, .dh.weekend .dd { color: var(--weekend); }
-.dh.today .wd::after { content: "今天"; margin-left: 4px; font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: .06em; }
+.dh.today .wd::after { content: attr(data-today); margin-left: 4px; font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: .06em; }
 th.sel .dh { border-bottom-color: var(--accent); }
 td.sel, th.sel { background: var(--col-sel); }
 .corner { position: sticky; left: 0; z-index: 2; background: var(--ground); }
@@ -372,25 +403,29 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
 <body>
 <headerclass="wrap top">
   <div>
-    <p class="eyebrow">天堂W · 潘朵拉 · 首領聯合拾取</p>
+    <p class="eyebrow" data-t="eyebrow">天堂W · 潘朵拉 · 首領聯合拾取</p>
     <div class="title-row">
-      <h1>拾取班表</h1>
-      <span class="stamp">新版草案<br>待確認</span>
+      <h1 data-t="title">拾取班表</h1>
+      <span class="stamp" data-t="stamp">新版草案<br>待確認</span>
     </div>
   </div>
   <div class="meta">
+    <div class="lang" role="group" aria-label="語言 / 언어">
+      <button type="button" id="lang-zh" data-lang="zh" lang="zh-Hant" aria-pressed="true">中文</button>
+      <button type="button" id="lang-ko" data-lang="ko" lang="ko" aria-pressed="false">한국어</button>
+    </div>
     <span class="range num">2026 / 9/14 – 10/4</span>
-    <span>時間皆為台灣時間 · 韓國時間 +1 小時</span>
+    <span data-t="tz">時間皆為台灣時間 · 韓國時間 +1 小時</span>
   </div>
 </header>
 
 <section class="wrap picker" aria-labelledby="picker-label">
-  <span class="picker-label" id="picker-label">看哪一團</span>
+  <span class="picker-label" id="picker-label" data-t="pick">看哪一團</span>
   <fieldset class="opts" id="opts"></fieldset>
 </section>
 
 <main class="wrap board">
-  <aside class="day" aria-label="當日首領">
+  <aside class="day" id="day-panel" aria-label="當日首領">
     <div class="day-head">
       <button class="icon-btn" id="prev" type="button" aria-label="前一天"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="day-date" id="day-date" aria-live="polite"></div>
@@ -402,12 +437,12 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
 
   <section aria-labelledby="week-title">
     <div class="week-head">
-      <h2 id="week-title">一週總覽</h2>
-      <div class="tabs" role="tablist" id="tabs" aria-label="選擇週次"></div>
+      <h2 id="week-title" data-t="week">一週總覽</h2>
+      <div class="tabs" role="tablist" id="tabs"></div>
     </div>
     <div class="scroll">
       <table id="grid">
-        <caption class="sr">每格是當天負責拾取的團</caption>
+        <caption class="sr" data-t="caption">每格是當天負責拾取的團</caption>
         <thead></thead>
         <tbody></tbody>
       </table>
@@ -415,34 +450,26 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
 
     <div class="under">
       <div>
-        <h3 id="mine-title">本週負責</h3>
+        <h3 id="mine-title"></h3>
         <div id="mine"></div>
-        <h3>怎麼輪的</h3>
-        <div class="pattern" aria-label="一輪 5 格">
-          <span><small>1</small>台灣</span>
-          <span class="chip" data-g="02"><small>2</small>02</span>
-          <span class="chip" data-g="03"><small>3</small>03</span>
-          <span><small>4</small>台灣</span>
-          <span><small>5</small>台灣</span>
-        </div>
-        <p class="rule-text">每隻首領都分 5 份：<span class="num">02</span>、<span class="num">03</span> 各 1 份，台灣方 3 份。傲塔／樂園每天走一格；世界首領每隻各自每週走一格，起點錯開。台灣位照 <span class="num">01 → 05 → 06+07 → 08 → 09</span> 一直往下接。</p>
+        <h3 data-t="ruleTitle">怎麼輪的</h3>
+        <div class="pattern" id="pattern"></div>
+        <p class="rule-text" id="rule-text"></p>
       </div>
       <div>
-        <h3>分配統計</h3>
+        <h3 data-t="tallyTitle">分配統計</h3>
         <table class="tally" id="tally">
-          <thead>
-            <tr><th>團</th><th>本週<br>傲塔/樂園</th><th>本週<br>世界首領</th><th class="grp">三週<br>傲塔/樂園</th><th>三週<br>世界首領</th></tr>
-          </thead>
+          <thead></thead>
           <tbody></tbody>
         </table>
-        <p class="tally-note">傲塔/樂園以「天」計；世界首領以「隻」計，雙龍兩天分開算。</p>
+        <p class="tally-note" data-t="tallyNote">傲塔/樂園以「天」計；世界首領以「隻」計，雙龍兩天分開算。</p>
       </div>
     </div>
   </section>
 </main>
 
 <footer class="wrap">
-  <p>資料來源：潘朵拉試算表「班表(新版)」分頁。9/7–9/13 那週沿用原表，不列入；10/5 起尚未排。試算表裡底比斯、提卡爾同一列，這裡照出現日拆成兩列。夢幻樂園 12:00、23:00 沿用舊表時間，官方公告沒有提到。</p>
+  <p data-t="footer"></p>
 </footer>
 
 <script>
@@ -455,42 +482,143 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
     { daily: ["02", "03", "08", "09", "01", "02", "03"], world: ["03", "02", "01", "02", "05", "08", "09", "06+07"] }
   ];
   var GROUPS = [
-    { code: "01", label: "台灣" },
-    { code: "02", label: "姐姐血盟 · 韓" },
-    { code: "03", label: "閃電血盟 · 韓" },
-    { code: "05", label: "台灣" },
-    { code: "06+07", label: "台灣 · 同一團" },
-    { code: "08", label: "台灣" },
-    { code: "09", label: "台灣" }
+    { code: "01", zh: "台灣", ko: "대만" },
+    { code: "02", zh: "姐姐血盟 · 韓", ko: "한국" },
+    { code: "03", zh: "閃電血盟 · 韓", ko: "한국" },
+    { code: "05", zh: "台灣", ko: "대만" },
+    { code: "06+07", zh: "台灣 · 同一團", ko: "대만 · 한 팀" },
+    { code: "08", zh: "台灣", ko: "대만" },
+    { code: "09", zh: "台灣", ko: "대만" }
   ];
-  // world units: index into WEEKS[].world, weekday (0 = Mon)
+  // world units: order matches WEEKS[].world; wd 0 = Mon; t = Taiwan time
+  // Korean names from the official 09/09 KR update note; row names from the sheet
   var WORLD = [
-    { wd: 1, t: "15:00", name: "冰之女王", row: "冰之女皇" },
-    { wd: 2, t: "21:00", name: "飛龍王", row: "遺忘-雙龍" },
-    { wd: 2, t: "21:00", name: "歐西里斯", row: "底比斯" },
-    { wd: 3, t: "21:00", name: "古代守護者", row: "遺忘-古代守護者" },
-    { wd: 3, t: "21:00", name: "杰弗雷庫", row: "提卡爾" },
-    { wd: 4, t: "21:00", name: "飛龍王", row: "遺忘-雙龍" },
-    { wd: 5, t: "21:00", name: "亞力安王", row: "遺忘-雞" },
-    { wd: 6, t: "21:00", name: "巨大牛人", row: "遺忘-牛" }
+    { wd: 1, t: "15:00", name: { zh: "冰之女王", ko: "얼음여왕" }, row: { zh: "冰之女皇", ko: "얼음 여왕" } },
+    { wd: 2, t: "21:00", name: { zh: "飛龍王", ko: "드레이크 킹" }, row: { zh: "遺忘-雙龍", ko: "드레이크킹" } },
+    { wd: 2, t: "21:00", name: { zh: "歐西里斯", ko: "오시리스" }, row: { zh: "底比斯", ko: "오시리스" } },
+    { wd: 3, t: "21:00", name: { zh: "古代守護者", ko: "에이션트 가디언" }, row: { zh: "遺忘-古代守護者", ko: "에이션트 가디언" } },
+    { wd: 3, t: "21:00", name: { zh: "杰弗雷庫", ko: "제브레퀴" }, row: { zh: "提卡爾", ko: "제브 레퀴" } },
+    { wd: 4, t: "21:00", name: { zh: "飛龍王", ko: "드레이크 킹" }, row: { zh: "遺忘-雙龍", ko: "드레이크킹" } },
+    { wd: 5, t: "21:00", name: { zh: "亞力安王", ko: "코카트리스 킹" }, row: { zh: "遺忘-雞", ko: "코카킹" } },
+    { wd: 6, t: "21:00", name: { zh: "巨大牛人", ko: "그레이트 미노타우루스" }, row: { zh: "遺忘-牛", ko: "미노킹" } }
   ];
   var ROWS = [
-    { title: "傲塔1-10、樂園+火龍窟", sub: "每天 · 兩列相同", kr: "오만1~10층 / 몽환의 낙원·마토르", daily: true },
-    { title: "冰之女皇", sub: "冰之女王 · 二 15:00", kr: "얼음 여왕", units: [0] },
-    { title: "遺忘-雙龍", sub: "飛龍王 · 三、五 21:00", kr: "드레이크킹", units: [1, 5] },
-    { title: "底比斯", sub: "歐西里斯 · 三 21:00", kr: "오시리스", units: [2] },
-    { title: "提卡爾", sub: "杰弗雷庫 · 四 21:00", kr: "제브 레퀴", units: [4] },
-    { title: "遺忘-古代守護者", sub: "古代守護者 · 四 21:00", kr: "에이션트 가디언", units: [3] },
-    { title: "遺忘-雞", sub: "亞力安王 · 六 21:00", kr: "코카킹", units: [6] },
-    { title: "遺忘-牛", sub: "巨大牛人 · 日 21:00", kr: "미노킹", units: [7] }
+    { daily: true,
+      title: { zh: "傲塔1-10、樂園+火龍窟", ko: "오만1~10층 · 낙원/마토르/피닉스" },
+      sub: { zh: "每天 · 兩列相同", ko: "매일 · 두 줄 동일" } },
+    { units: [0] }, { units: [1, 5] }, { units: [2] }, { units: [4] }, { units: [3] }, { units: [6] }, { units: [7] }
   ];
-  var WDN = "一二三四五六日";
 
-  var state = { day: 0, week: 0, group: "" };
+  var T = {
+    zh: {
+      doc: "潘朵拉拾取班表",
+      eyebrow: "天堂W · 潘朵拉 · 首領聯合拾取",
+      title: "拾取班表",
+      stamp: "新版草案<br>待確認",
+      tz: "時間皆為台灣時間 · 韓國時間 +1 小時",
+      pick: "看哪一團",
+      all: "全部",
+      dayPanel: "當日首領",
+      prev: "前一天", next: "後一天",
+      week: "一週總覽",
+      weeks: "選擇週次",
+      tab: function (k) { return "第" + "二三四"[k] + "週"; },
+      caption: "每格是當天負責拾取的團",
+      wdn: "一二三四五六日",
+      wdPrefix: "週",
+      daySep: "、",
+      today: "今天",
+      otherTz: "韓",
+      nextTag: "下一場", nowTag: "進行中",
+      world: "世界",
+      owner: "負責",
+      none: "無",
+      tw: "台灣",
+      ev: {
+        garden: "夢幻樂園", gardenSub: "機率出現",
+        odd: "傲塔 1·3·5·7·9F", oddSub: "傑尼斯、吸血鬼、黑豹、艾莉絲、巫妖",
+        even: "傲塔 2·4·6·8·10F", evenSub: "眼魔、殭屍王、木乃伊、范德、烏格奴斯",
+        matorTakun: "馬托爾、塔坤", matorPhoenix: "馬托爾、不死鳥", matorSub: "樂園+火龍窟"
+      },
+      stGroup: function (g, n) { return n ? "<strong class=\"num\">" + g + "</strong> 這天負責 <strong class=\"num\">" + n + "</strong> 場" : "<strong class=\"num\">" + g + "</strong> 這天沒有輪到"; },
+      stDone: "今天的首領都結束了",
+      stNext: function (t, h, m) { return "下一場 <strong class=\"num\">" + t + "</strong>，還有 " + (h ? "<span class=\"num\">" + h + "</span> 小時 " : "") + "<span class=\"num\">" + m + "</span> 分"; },
+      stNow: function (t) { return "<strong class=\"num\">" + t + "</strong> 那一場正在打"; },
+      stOther: function (g, n) { return "傲塔／樂園由 <strong class=\"num\">" + g + "</strong> 負責 · " + (n ? "世界首領 <strong class=\"num\">" + n + "</strong> 隻" : "沒有世界首領"); },
+      mineTitle: function (g) { return g ? g + " 本週負責" : "本週負責"; },
+      mineHint: "在上方選一個團，就會列出這週輪到它的首領，表格也會只亮出它的格子。",
+      mineNone: function (g) { return g + " 這週沒有輪到。"; },
+      mineDaily: "傲塔1-10、樂園+火龍窟 全天",
+      mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + "，樂園 " + f("12:00") + " · " + f("23:00"); },
+      ruleTitle: "怎麼輪的",
+      rule: "每隻首領都分 5 份：<span class=\"num\">02</span>、<span class=\"num\">03</span> 各 1 份，台灣方 3 份。傲塔／樂園每天走一格；世界首領每隻各自每週走一格，起點錯開。台灣位照 <span class=\"num\">01 → 05 → 06+07 → 08 → 09</span> 一直往下接。",
+      patternLabel: "一輪 5 格",
+      tallyTitle: "分配統計",
+      tallyHead: ["團", "本週<br>傲塔/樂園", "本週<br>世界首領", "三週<br>傲塔/樂園", "三週<br>世界首領"],
+      tallyNote: "傲塔/樂園以「天」計；世界首領以「隻」計，雙龍兩天分開算。",
+      footer: "資料來源：潘朵拉試算表「班表(新版)」分頁。9/7–9/13 那週沿用原表，不列入；10/5 起尚未排。試算表裡底比斯、提卡爾同一列，這裡照出現日拆成兩列。夢幻樂園 12:00、23:00 沿用舊表時間，官方公告沒有提到。"
+    },
+    ko: {
+      doc: "판도라 루팅 순번표",
+      eyebrow: "리니지W · 판도라 · 보스 연합 루팅",
+      title: "루팅 순번표",
+      stamp: "새 버전 초안<br>확인 대기",
+      tz: "모든 시간은 한국 시간 · 대만은 1시간 느림",
+      pick: "팀 선택",
+      all: "전체",
+      dayPanel: "그날의 보스",
+      prev: "이전 날", next: "다음 날",
+      week: "주간 일정",
+      weeks: "주 선택",
+      tab: function (k) { return "9월 " + (k + 2) + "주"; },
+      caption: "각 칸은 그날 루팅 담당 팀",
+      wdn: "월화수목금토일",
+      wdPrefix: "",
+      daySep: "·",
+      today: "오늘",
+      otherTz: "대만",
+      nextTag: "다음", nowTag: "진행 중",
+      world: "월드",
+      owner: "담당",
+      none: "없음",
+      tw: "대만",
+      ev: {
+        garden: "몽환의 낙원", gardenSub: "확률 출현",
+        odd: "오만의 탑 1·3·5·7·9층", oddSub: "제니스 퀸, 뱀파이어, 쿠거, 아이리스, 리치",
+        even: "오만의 탑 2·4·6·8·10층", evenSub: "시어, 좀비 로드, 머미 로드, 나이트 발드, 우그누스",
+        matorTakun: "마토르, 타곤", matorPhoenix: "마토르, 피닉스", matorSub: "몽환의 낙원/마토르/피닉스"
+      },
+      stGroup: function (g, n) { return n ? "<strong class=\"num\">" + g + "</strong> 이날 담당 <strong class=\"num\">" + n + "</strong>건" : "<strong class=\"num\">" + g + "</strong> 이날 담당 없음"; },
+      stDone: "오늘 보스는 모두 끝났습니다",
+      stNext: function (t, h, m) { return "다음 <strong class=\"num\">" + t + "</strong> · " + (h ? "<span class=\"num\">" + h + "</span>시간 " : "") + "<span class=\"num\">" + m + "</span>분 남음"; },
+      stNow: function (t) { return "<strong class=\"num\">" + t + "</strong> 진행 중"; },
+      stOther: function (g, n) { return "오만/낙원 담당 <strong class=\"num\">" + g + "</strong> · " + (n ? "월드 보스 <strong class=\"num\">" + n + "</strong>마리" : "월드 보스 없음"); },
+      mineTitle: function (g) { return g ? g + " 이번 주 담당" : "이번 주 담당"; },
+      mineHint: "위에서 팀을 선택하면 이번 주에 그 팀이 맡은 보스가 표시되고, 표에서도 해당 칸만 강조됩니다.",
+      mineNone: function (g) { return g + " 이번 주 담당 없음."; },
+      mineDaily: "오만1~10층, 몽환의 낙원/마토르/피닉스 종일",
+      mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + ", 낙원 " + f("12:00") + " · " + f("23:00"); },
+      ruleTitle: "순번 규칙",
+      rule: "모든 보스는 5몫으로 나눕니다: <span class=\"num\">02</span>, <span class=\"num\">03</span> 각 1몫, 대만 측 3몫. 오만/낙원은 하루에 한 칸씩, 월드 보스는 보스마다 매주 한 칸씩 진행하며 시작 위치가 서로 다릅니다. 대만 몫은 <span class=\"num\">01 → 05 → 06+07 → 08 → 09</span> 순서로 계속 이어집니다.",
+      patternLabel: "한 바퀴 5칸",
+      tallyTitle: "배분 통계",
+      tallyHead: ["팀", "이번 주<br>오만/낙원", "이번 주<br>월드 보스", "3주 합계<br>오만/낙원", "3주 합계<br>월드 보스"],
+      tallyNote: "오만/낙원은 일수, 월드 보스는 마리 수 기준. 드레이크 킹은 두 요일을 따로 셉니다.",
+      footer: "출처: 판도라 스프레드시트 「班表(新版)」 탭. 9/7–9/13 주는 기존 표를 그대로 써서 제외했고, 10/5부터는 아직 정해지지 않았습니다. 스프레드시트에서는 오시리스와 제브레퀴가 한 줄이지만 여기서는 출현 요일별로 나눴습니다. 몽환의 낙원 13:00, 00:00은 기존 표의 시간이며 공식 공지에는 언급이 없습니다."
+    }
+  };
+
+  var state = { day: 0, week: 0, group: "", lang: "zh" };
+  function L() { return T[state.lang]; }
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function md(i) { var d = new Date(START + i * 864e5); return (d.getUTCMonth() + 1) + "/" + d.getUTCDate(); }
   function mins(t) { var p = t.split(":"); return +p[0] * 60 + +p[1]; }
+  function kst(t) { return ("0" + (+t.slice(0, 2) + 1) % 24).slice(-2) + t.slice(2); }
+  // primary time shown in the reader's own time zone
+  function tm(t) { return state.lang === "ko" ? kst(t) : t; }
+  function tmOther(t) { return state.lang === "ko" ? t : kst(t); }
+  function wdName(d) { return L().wdPrefix + L().wdn[d]; }
 
   function taipeiNow() {
     var parts = {};
@@ -501,17 +629,17 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
   }
 
   function events(i) {
-    var w = Math.floor(i / 7), wd = i % 7, W = WEEKS[w], D = W.daily;
+    var w = Math.floor(i / 7), wd = i % 7, W = WEEKS[w], D = W.daily, E = L().ev, lang = state.lang;
     var list = [
-      { t: "12:00", name: "夢幻樂園", sub: "機率出現", g: D[wd] },
-      { t: "17:35", name: "傲塔 1·3·5·7·9F", sub: "傑尼斯、吸血鬼、黑豹、艾莉絲、巫妖", g: D[wd] },
-      { t: "19:10", name: "傲塔 2·4·6·8·10F", sub: "眼魔、殭屍王、木乃伊、范德、烏格奴斯", g: D[wd] }
+      { t: "12:00", name: E.garden, sub: E.gardenSub, g: D[wd] },
+      { t: "17:35", name: E.odd, sub: E.oddSub, g: D[wd] },
+      { t: "19:10", name: E.even, sub: E.evenSub, g: D[wd] }
     ];
     WORLD.forEach(function (u, k) {
-      if (u.wd === wd) list.push({ t: u.t, name: u.name, sub: u.row, g: W.world[k], world: true });
+      if (u.wd === wd) list.push({ t: u.t, name: u.name[lang], sub: u.row[lang] !== u.name[lang] ? u.row[lang] : "", g: W.world[k], world: true });
     });
-    list.push({ t: "21:00", name: (wd === 1 || wd === 3 || wd === 5) ? "馬托爾、塔坤" : "馬托爾、不死鳥", sub: "樂園+火龍窟", g: D[wd] });
-    list.push({ t: "23:00", name: "夢幻樂園", sub: "機率出現", g: D[wd] });
+    list.push({ t: "21:00", name: (wd === 1 || wd === 3 || wd === 5) ? E.matorTakun : E.matorPhoenix, sub: E.matorSub, g: D[wd] });
+    list.push({ t: "23:00", name: E.garden, sub: E.gardenSub, g: D[wd] });
     list.sort(function (a, b) { return mins(a.t) - mins(b.t); });
     return list;
   }
@@ -521,28 +649,47 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
     return g === state.group ? " mine" : " dim";
   }
 
-  /* ---------- picker ---------- */
-  var opts = document.getElementById("opts");
-  var optHtml = '<legend class="sr">看哪一團</legend>' +
-    '<label class="opt"><input type="radio" name="grp" id="grp-all" value=""><span><b>全部</b></span></label>';
-  GROUPS.forEach(function (g) {
-    var id = "grp-" + g.code.replace("+", "-");
-    optHtml += '<label class="opt" data-g="' + g.code + '"><input type="radio" name="grp" id="' + id + '" value="' + g.code + '"><span><b>' + g.code + '</b><small>' + esc(g.label) + '</small></span></label>';
-  });
-  opts.innerHTML = optHtml;
-  opts.addEventListener("change", function (e) {
-    state.group = e.target.value;
-    try { localStorage.setItem("pandora-group", state.group); } catch (err) {}
-    render();
-  });
+  /* ---------- static text ---------- */
+  function renderStatic() {
+    var t = L();
+    document.documentElement.lang = state.lang === "ko" ? "ko" : "zh-Hant";
+    document.title = t.doc;
+    document.querySelectorAll("[data-t]").forEach(function (el) { el.innerHTML = t[el.getAttribute("data-t")]; });
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === state.lang)); });
+    document.getElementById("day-panel").setAttribute("aria-label", t.dayPanel);
+    document.getElementById("prev").setAttribute("aria-label", t.prev);
+    document.getElementById("next").setAttribute("aria-label", t.next);
+    document.getElementById("tabs").setAttribute("aria-label", t.weeks);
+    document.getElementById("rule-text").innerHTML = t.rule;
+    var pat = document.getElementById("pattern");
+    pat.setAttribute("aria-label", t.patternLabel);
+    pat.innerHTML = ["TW", "02", "03", "TW", "TW"].map(function (s, k) {
+      return s === "TW" ? "<span><small>" + (k + 1) + "</small>" + t.tw + "</span>"
+        : '<span class="chip" data-g="' + s + '"><small>' + (k + 1) + "</small>" + s + "</span>";
+    }).join("");
+    document.querySelector("#tally thead").innerHTML = "<tr>" + t.tallyHead.map(function (h, k) {
+      return "<th" + (k === 3 ? ' class="grp"' : "") + ">" + h + "</th>";
+    }).join("") + "</tr>";
+
+    var checked = state.group;
+    var optHtml = '<legend class="sr">' + t.pick + '</legend>' +
+      '<label class="opt"><input type="radio" name="grp" id="grp-all" value=""><span><b>' + t.all + '</b></span></label>';
+    GROUPS.forEach(function (g) {
+      var id = "grp-" + g.code.replace("+", "-");
+      optHtml += '<label class="opt" data-g="' + g.code + '"><input type="radio" name="grp" id="' + id + '" value="' + g.code + '"><span><b>' + g.code + '</b><small>' + esc(g[state.lang]) + '</small></span></label>';
+    });
+    opts.innerHTML = optHtml;
+    var input = document.getElementById(checked ? "grp-" + checked.replace("+", "-") : "grp-all");
+    if (input) input.checked = true;
+  }
 
   /* ---------- day panel ---------- */
   function renderDay() {
-    var i = state.day, wd = i % 7, now = taipeiNow(), isToday = now.idx === i;
+    var t = L(), i = state.day, wd = i % 7, now = taipeiNow(), isToday = now.idx === i;
     document.getElementById("day-date").innerHTML =
       '<span class="big num">' + md(i) + '</span>' +
-      '<span class="wd' + (wd >= 5 ? " weekend" : "") + '">週' + WDN[wd] + '</span>' +
-      (isToday ? '<span class="today-tag">今天</span>' : "");
+      '<span class="wd' + (wd >= 5 ? " weekend" : "") + '">' + wdName(wd) + '</span>' +
+      (isToday ? '<span class="today-tag">' + t.today + '</span>' : "");
     document.getElementById("prev").disabled = i === 0;
     document.getElementById("next").disabled = i === NDAYS - 1;
 
@@ -559,15 +706,15 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       var cls = "slot";
       if (isToday && (nextIdx === -1 || k < nextIdx)) cls += " past";
       if (k === nextIdx) cls += " next";
-      html += '<li class="' + cls + '"><div class="slot-time num">' + s.t +
-        '<small>韓 ' + ("0" + (+s.t.slice(0, 2) + 1) % 24).slice(-2) + s.t.slice(2) + '</small>' +
-        (k === nextIdx ? '<span class="next-tag">' + (mins(s.t) <= now.min ? "進行中" : "下一場") + '</span>' : "") +
+      html += '<li class="' + cls + '"><div class="slot-time num">' + tm(s.t) +
+        '<small>' + t.otherTz + ' ' + tmOther(s.t) + '</small>' +
+        (k === nextIdx ? '<span class="next-tag">' + (mins(s.t) <= now.min ? t.nowTag : t.nextTag) + '</span>' : "") +
         '</div><div class="evs">';
       s.items.forEach(function (e) {
         html += '<div class="ev' + chipCls(e.g) + '" data-g="' + e.g + '">' +
-          '<div><div class="ev-name">' + esc(e.name) + (e.world ? '<span class="kind">世界</span>' : "") + '</div>' +
+          '<div><div class="ev-name">' + esc(e.name) + (e.world ? '<span class="kind">' + t.world + '</span>' : "") + '</div>' +
           '<div class="ev-sub">' + esc(e.sub) + '</div></div>' +
-          '<div class="sigil" aria-label="負責 ' + e.g + '">' + e.g + '</div></div>';
+          '<div class="sigil" aria-label="' + t.owner + ' ' + e.g + '">' + e.g + '</div></div>';
       });
       html += "</div></li>";
     });
@@ -575,49 +722,61 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
 
     var status;
     if (state.group) {
-      var n = evs.filter(function (e) { return e.g === state.group; }).length;
-      status = n ? '<strong class="num">' + state.group + '</strong> 這天負責 <strong class="num">' + n + '</strong> 場' : '<strong class="num">' + state.group + '</strong> 這天沒有輪到';
+      status = t.stGroup(state.group, evs.filter(function (e) { return e.g === state.group; }).length);
       if (isToday && nextIdx !== -1) status += " · " + countdown(slots[nextIdx].t, now.min);
     } else if (isToday) {
-      status = nextIdx === -1 ? "今天的首領都結束了" : countdown(slots[nextIdx].t, now.min);
+      status = nextIdx === -1 ? t.stDone : countdown(slots[nextIdx].t, now.min);
     } else {
-      var wc = evs.filter(function (e) { return e.world; }).length;
-      status = "傲塔／樂園由 <strong class=\"num\">" + WEEKS[Math.floor(i / 7)].daily[wd] + "</strong> 負責" + (wc ? " · 世界首領 <strong class=\"num\">" + wc + "</strong> 隻" : " · 沒有世界首領");
+      status = t.stOther(WEEKS[Math.floor(i / 7)].daily[wd], evs.filter(function (e) { return e.world; }).length);
     }
     document.getElementById("day-status").innerHTML = status;
   }
 
   function countdown(t, nowMin) {
     var diff = mins(t) - nowMin;
-    if (diff <= 0) return '<strong class="num">' + t + '</strong> 那一場正在打';
-    var h = Math.floor(diff / 60), m = diff % 60;
-    return '下一場 <strong class="num">' + t + '</strong>，還有 ' + (h ? '<span class="num">' + h + '</span> 小時 ' : "") + '<span class="num">' + m + '</span> 分';
+    if (diff <= 0) return L().stNow(tm(t));
+    return L().stNext(tm(t), Math.floor(diff / 60), diff % 60);
   }
 
   /* ---------- week grid ---------- */
+  function daysLabel(units) {
+    var seen = [];
+    units.forEach(function (k) { var d = L().wdn[WORLD[k].wd]; if (seen.indexOf(d) < 0) seen.push(d); });
+    return seen.join(L().daySep);
+  }
+
   function renderWeek() {
-    var w = state.week, W = WEEKS[w], base = w * 7, todayIdx = taipeiNow().idx;
+    var t = L(), w = state.week, W = WEEKS[w], base = w * 7, todayIdx = taipeiNow().idx, lang = state.lang, other = lang === "ko" ? "zh" : "ko";
     document.getElementById("tabs").innerHTML = WEEKS.map(function (_, k) {
-      return '<button class="tab" type="button" role="tab" id="tab-' + k + '" aria-selected="' + (k === w) + '" data-w="' + k + '"><span class="w">第' + "二三四"[k] + '週</span>' + md(k * 7) + '</button>';
+      return '<button class="tab" type="button" role="tab" id="tab-' + k + '" aria-selected="' + (k === w) + '" data-w="' + k + '"><span class="w">' + t.tab(k) + '</span>' + md(k * 7) + '</button>';
     }).join("");
 
-    var head = '<tr><th class="corner" scope="col"><span class="sr">首領</span></th>';
+    var head = '<tr><th class="corner" scope="col"><span class="sr">Boss</span></th>';
     for (var d = 0; d < 7; d++) {
       var i = base + d, sel = i === state.day ? " sel" : "";
       head += '<th scope="col" class="' + sel + '"><button type="button" class="dh' + (d >= 5 ? " weekend" : "") + (i === todayIdx ? " today" : "") + '" data-day="' + i + '" aria-pressed="' + (i === state.day) + '">' +
-        '<span class="wd">' + WDN[d] + '</span><span class="dd num">' + md(i) + '</span></button></th>';
+        '<span class="wd" data-today="' + t.today + '">' + t.wdn[d] + '</span><span class="dd num">' + md(i) + '</span></button></th>';
     }
     document.querySelector("#grid thead").innerHTML = head + "</tr>";
 
     var body = "";
     ROWS.forEach(function (r) {
-      body += '<tr' + (r.daily ? ' class="daily"' : "") + '><th scope="row"><span class="rn">' + esc(r.title) + '</span><span class="rs">' + esc(r.sub) + '</span><span class="rk" lang="ko">' + esc(r.kr) + '</span></th>';
+      var title, sub, alt;
+      if (r.daily) {
+        title = r.title[lang]; sub = r.sub[lang]; alt = r.title[other];
+      } else {
+        var u = WORLD[r.units[0]];
+        title = u.row[lang];
+        sub = (u.name[lang] !== title ? u.name[lang] + " · " : "") + daysLabel(r.units) + " " + tm(u.t);
+        alt = u.row[other];
+      }
+      body += '<tr' + (r.daily ? ' class="daily"' : "") + '><th scope="row"><span class="rn">' + esc(title) + '</span><span class="rs">' + esc(sub) + '</span><span class="rk" lang="' + (other === "ko" ? "ko" : "zh-Hant") + '">' + esc(alt) + '</span></th>';
       for (var d = 0; d < 7; d++) {
         var g = "";
         if (r.daily) g = W.daily[d];
         else r.units.forEach(function (k) { if (WORLD[k].wd === d) g = W.world[k]; });
         var sel = base + d === state.day ? ' class="sel"' : "";
-        body += "<td" + sel + ">" + (g ? '<span class="chip' + chipCls(g) + '" data-g="' + g + '">' + g + "</span>" : '<span class="none" aria-label="無">·</span>') + "</td>";
+        body += "<td" + sel + ">" + (g ? '<span class="chip' + chipCls(g) + '" data-g="' + g + '">' + g + "</span>" : '<span class="none" aria-label="' + t.none + '">·</span>') + "</td>";
       }
       body += "</tr>";
     });
@@ -626,18 +785,18 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
 
   /* ---------- mine + tally ---------- */
   function renderMine() {
-    var w = state.week, W = WEEKS[w], G = state.group, el = document.getElementById("mine");
-    document.getElementById("mine-title").textContent = G ? G + " 本週負責" : "本週負責";
-    if (!G) { el.innerHTML = '<p class="mine-empty">在上方選一個團，就會列出這週輪到它的首領，表格也會只亮出它的格子。</p>'; return; }
+    var t = L(), w = state.week, W = WEEKS[w], G = state.group, el = document.getElementById("mine");
+    document.getElementById("mine-title").textContent = t.mineTitle(G);
+    if (!G) { el.innerHTML = '<p class="mine-empty">' + t.mineHint + '</p>'; return; }
     var items = [];
     for (var d = 0; d < 7; d++) {
-      var i = w * 7 + d, when = '<span class="when num">' + md(i) + '<small>週' + WDN[d] + '</small></span>';
-      if (W.daily[d] === G) items.push("<li>" + when + '<span>傲塔1-10、樂園+火龍窟 全天<br><span class="ev-sub">17:35 · 19:10 · 21:00，樂園 12:00 · 23:00</span></span></li>');
+      var i = w * 7 + d, when = '<span class="when num">' + md(i) + '<small>' + wdName(d) + '</small></span>';
+      if (W.daily[d] === G) items.push("<li>" + when + "<span>" + t.mineDaily + '<br><span class="ev-sub">' + t.mineDailySub(tm) + "</span></span></li>");
       WORLD.forEach(function (u, k) {
-        if (u.wd === d && W.world[k] === G) items.push("<li>" + when + "<span>" + esc(u.row) + '<br><span class="ev-sub">' + esc(u.name) + " · " + u.t + "</span></span></li>");
+        if (u.wd === d && W.world[k] === G) items.push("<li>" + when + "<span>" + esc(u.row[state.lang]) + '<br><span class="ev-sub">' + (u.name[state.lang] !== u.row[state.lang] ? esc(u.name[state.lang]) + " · " : "") + tm(u.t) + "</span></span></li>");
       });
     }
-    el.innerHTML = items.length ? '<ul class="mine-list">' + items.join("") + "</ul>" : '<p class="mine-empty">' + G + " 這週沒有輪到。</p>";
+    el.innerHTML = items.length ? '<ul class="mine-list">' + items.join("") + "</ul>" : '<p class="mine-empty">' + t.mineNone(G) + "</p>";
   }
 
   function renderTally() {
@@ -653,8 +812,6 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
 
   function render() {
     document.body.classList.toggle("filtering", !!state.group);
-    var input = document.getElementById(state.group ? "grp-" + state.group.replace("+", "-") : "grp-all");
-    if (input) input.checked = true;
     renderDay(); renderWeek(); renderMine(); renderTally();
   }
 
@@ -664,6 +821,28 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
     render();
   }
 
+  function setLang(lang) {
+    state.lang = lang === "ko" ? "ko" : "zh";
+    try { localStorage.setItem("pandora-lang", state.lang); } catch (err) {}
+    try {
+      var url = new URL(location.href);
+      url.searchParams.set("lang", state.lang);
+      history.replaceState(null, "", url);
+    } catch (err) {}
+    renderStatic();
+    render();
+  }
+
+  var opts = document.getElementById("opts");
+  opts.addEventListener("change", function (e) {
+    state.group = e.target.value;
+    try { localStorage.setItem("pandora-group", state.group); } catch (err) {}
+    render();
+  });
+  document.querySelector(".lang").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-lang]");
+    if (b) setLang(b.getAttribute("data-lang"));
+  });
   document.getElementById("prev").addEventListener("click", function () { setDay(state.day - 1); });
   document.getElementById("next").addEventListener("click", function () { setDay(state.day + 1); });
   document.getElementById("grid").addEventListener("click", function (e) {
@@ -672,12 +851,19 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
   });
   document.getElementById("tabs").addEventListener("click", function (e) {
     var b = e.target.closest("[data-w]");
-    if (!b) return;
-    var w = +b.getAttribute("data-w");
-    setDay(w * 7 + (state.day % 7));
+    if (b) setDay(+b.getAttribute("data-w") * 7 + (state.day % 7));
   });
 
   try { var saved = localStorage.getItem("pandora-group"); if (saved !== null && (saved === "" || GROUPS.some(function (g) { return g.code === saved; }))) state.group = saved; } catch (err) {}
+  // language: ?lang= link first, then last choice, then browser language
+  var lang = null;
+  try { lang = new URL(location.href).searchParams.get("lang"); } catch (err) {}
+  if (lang !== "ko" && lang !== "zh") {
+    try { lang = localStorage.getItem("pandora-lang"); } catch (err) {}
+  }
+  if (lang !== "ko" && lang !== "zh") lang = /^ko\b/i.test(navigator.language || "") ? "ko" : "zh";
+  state.lang = lang;
+  renderStatic();
   setDay(taipeiNow().idx);
   setInterval(function () { if (taipeiNow().idx === state.day) renderDay(); }, 30000);
 })();
