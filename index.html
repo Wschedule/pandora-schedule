@@ -240,6 +240,23 @@ h1 {
   border-bottom: 1px solid var(--rule);
 }
 .day-status strong { color: var(--ink); font-weight: 600; }
+.day-actions { padding: 10px 16px; border-bottom: 1px solid var(--rule); }
+.copy-btn {
+  width: 100%;
+  min-height: 44px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--surface);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.copy-btn:hover { background: var(--ground); border-color: color-mix(in oklab, var(--accent) 45%, var(--rule)); }
+.copy-btn svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
 .slots { list-style: none; margin: 0; padding: 0; }
 .slot {
   display: grid;
@@ -432,6 +449,10 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       <button class="icon-btn" id="next" type="button" aria-label="後一天"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
     <p class="day-status" id="day-status"></p>
+    <div class="day-actions">
+      <button type="button" class="copy-btn" id="copy-day"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span id="copy-label"></span></button>
+      <span class="sr" id="copy-live" aria-live="polite"></span>
+    </div>
     <ol class="slots" id="slots"></ol>
   </aside>
 
@@ -492,15 +513,25 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
   ];
   // world units: order matches WEEKS[].world; wd 0 = Mon; t = Taiwan time
   // Korean names from the official 09/09 KR update note; row names from the sheet
+  // txt = name used in the copied text schedule (地圖-首領)
   var WORLD = [
-    { wd: 1, t: "15:00", name: { zh: "冰之女王", ko: "얼음여왕" }, row: { zh: "冰之女皇", ko: "얼음 여왕" } },
-    { wd: 2, t: "21:00", name: { zh: "飛龍王", ko: "드레이크 킹" }, row: { zh: "遺忘-雙龍", ko: "드레이크킹" } },
-    { wd: 2, t: "21:00", name: { zh: "歐西里斯", ko: "오시리스" }, row: { zh: "底比斯", ko: "오시리스" } },
-    { wd: 3, t: "21:00", name: { zh: "古代守護者", ko: "에이션트 가디언" }, row: { zh: "遺忘-古代守護者", ko: "에이션트 가디언" } },
-    { wd: 3, t: "21:00", name: { zh: "杰弗雷庫", ko: "제브레퀴" }, row: { zh: "提卡爾", ko: "제브 레퀴" } },
-    { wd: 4, t: "21:00", name: { zh: "飛龍王", ko: "드레이크 킹" }, row: { zh: "遺忘-雙龍", ko: "드레이크킹" } },
-    { wd: 5, t: "21:00", name: { zh: "亞力安王", ko: "코카트리스 킹" }, row: { zh: "遺忘-雞", ko: "코카킹" } },
-    { wd: 6, t: "21:00", name: { zh: "巨大牛人", ko: "그레이트 미노타우루스" }, row: { zh: "遺忘-牛", ko: "미노킹" } }
+    { wd: 1, t: "15:00", name: { zh: "冰之女王", ko: "얼음여왕" }, row: { zh: "冰之女皇", ko: "얼음 여왕" }, txt: "冰之女王" },
+    { wd: 2, t: "21:00", name: { zh: "飛龍王", ko: "드레이크 킹" }, row: { zh: "遺忘-雙龍", ko: "드레이크킹" }, txt: "遺忘之島-飛龍王" },
+    { wd: 2, t: "21:00", name: { zh: "歐西里斯", ko: "오시리스" }, row: { zh: "底比斯", ko: "오시리스" }, txt: "底比斯-歐西里斯" },
+    { wd: 3, t: "21:00", name: { zh: "古代守護者", ko: "에이션트 가디언" }, row: { zh: "遺忘-古代守護者", ko: "에이션트 가디언" }, txt: "遺忘之島-古代守護者" },
+    { wd: 3, t: "21:00", name: { zh: "杰弗雷庫", ko: "제브레퀴" }, row: { zh: "提卡爾", ko: "제브 레퀴" }, txt: "提卡爾-杰弗雷庫" },
+    { wd: 4, t: "21:00", name: { zh: "飛龍王", ko: "드레이크 킹" }, row: { zh: "遺忘-雙龍", ko: "드레이크킹" }, txt: "遺忘之島-飛龍王" },
+    { wd: 5, t: "21:00", name: { zh: "亞力安王", ko: "코카트리스 킹" }, row: { zh: "遺忘-雞", ko: "코카킹" }, txt: "遺忘之島-亞力安王" },
+    { wd: 6, t: "21:00", name: { zh: "巨大牛人", ko: "그레이트 미노타우루스" }, row: { zh: "遺忘-牛", ko: "미노킹" }, txt: "遺忘之島-巨大牛人" }
+  ];
+  // arena bosses from the timer app (README §6.3), not part of the joint loot: listed in the copied text without an owner
+  var ARENA = [
+    { wds: [0, 1], t: "21:00", txt: "拉斯塔巴德-全區" },
+    { wds: [3], t: "20:00", txt: "地龍窟-安塔瑞斯" },
+    { wds: [4, 5], t: "18:00", txt: "黃昏山脈-古代巨人" },
+    { wds: [6], t: "21:00", txt: "風龍窟-迪亞勒" },
+    { wds: [6], t: "21:00", txt: "席琳聖所-扭曲的席琳" },
+    { wds: [6], t: "21:00", txt: "神界-梅塔特隆" }
   ];
   var ROWS = [
     { daily: true,
@@ -520,6 +551,10 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       all: "全部",
       dayPanel: "當日首領",
       prev: "前一天", next: "後一天",
+      copyToday: "複製今日行程（文字版）",
+      copyDay: function (d) { return "複製 " + d + " 行程（文字版）"; },
+      copied: "已複製，可以直接貼到群組",
+      copyFail: "無法自動複製，請改用電腦或其他瀏覽器",
       week: "一週總覽",
       weeks: "選擇週次",
       tab: function (k) { return "第" + "二三四"[k] + "週"; },
@@ -568,6 +603,10 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       all: "전체",
       dayPanel: "그날의 보스",
       prev: "이전 날", next: "다음 날",
+      copyToday: "오늘 일정 텍스트 복사 (중국어)",
+      copyDay: function (d) { return d + " 일정 텍스트 복사 (중국어)"; },
+      copied: "복사했습니다 (중국어 텍스트, 대만 시간)",
+      copyFail: "자동 복사에 실패했습니다. 다른 브라우저로 시도해 주세요",
       week: "주간 일정",
       weeks: "주 선택",
       tab: function (k) { return "9월 " + (k + 2) + "주"; },
@@ -644,6 +683,61 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
     return list;
   }
 
+  /* ---------- copyable text schedule (always Chinese, Taiwan time) ---------- */
+  function dayText(i) {
+    var W = WEEKS[Math.floor(i / 7)], wd = i % 7, g = W.daily[wd];
+    function own(c) { return "👉" + c + "👈"; }
+    var blocks = [
+      { t: "17:35", text: "🔸傲慢之塔1、3、5、7、9\n⏰(17:35)" + own(g) },
+      { t: "19:10", text: "🔸傲慢之塔2、4、6、8、10\n⏰(19:10)" + own(g) }
+    ];
+    var byTime = {};
+    function add(t, line) { (byTime[t] = byTime[t] || []).push(line); }
+    if (wd === 1 || wd === 3 || wd === 5) add("21:00", "🔸火龍窟-塔    坤" + own(g));
+    else add("21:00", "🔸火龍窟-不死鳥" + own(g));
+    add("21:00", "🔸火龍窟-馬托爾" + own(g));
+    WORLD.forEach(function (u, k) { if (u.wd === wd) add(u.t, "🔸" + u.txt + own(W.world[k])); });
+    ARENA.forEach(function (a) { if (a.wds.indexOf(wd) >= 0) add(a.t, "🔹" + a.txt); });
+    Object.keys(byTime).forEach(function (t) { blocks.push({ t: t, text: byTime[t].join("\n") + "\n⏰(" + t + ")" }); });
+    blocks.sort(function (a, b) { return mins(a.t) - mins(b.t); });
+
+    var out = "🔸夢幻樂園" + own(g) + "\n⏰(15:00 22:00)", evening = false;
+    blocks.forEach(function (b) {
+      var sep = "\n\n";
+      if (!evening && mins(b.t) >= mins("20:00")) { evening = true; sep = "\n\n\n"; }
+      out += sep + b.text;
+    });
+    return out;
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function () { return legacyCopy(text); });
+    }
+    return legacyCopy(text);
+  }
+  function legacyCopy(text) {
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.top = "-1000px"; ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (err) {}
+      document.body.removeChild(ta);
+      ok ? resolve() : reject();
+    });
+  }
+
+  var copyTimer = 0;
+  function copyLabel() {
+    var t = L(), btn = document.getElementById("copy-day");
+    btn.classList.remove("done");
+    document.getElementById("copy-label").textContent = taipeiNow().idx === state.day ? t.copyToday : t.copyDay(md(state.day));
+  }
+
   function chipCls(g) {
     if (!state.group) return "";
     return g === state.group ? " mine" : " dim";
@@ -690,6 +784,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       '<span class="big num">' + md(i) + '</span>' +
       '<span class="wd' + (wd >= 5 ? " weekend" : "") + '">' + wdName(wd) + '</span>' +
       (isToday ? '<span class="today-tag">' + t.today + '</span>' : "");
+    if (!copyTimer) copyLabel();
     document.getElementById("prev").disabled = i === 0;
     document.getElementById("next").disabled = i === NDAYS - 1;
 
@@ -816,6 +911,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
   }
 
   function setDay(i) {
+    clearTimeout(copyTimer); copyTimer = 0;
     state.day = Math.max(0, Math.min(NDAYS - 1, i));
     state.week = Math.floor(state.day / 7);
     render();
@@ -842,6 +938,19 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
   document.querySelector(".lang").addEventListener("click", function (e) {
     var b = e.target.closest("[data-lang]");
     if (b) setLang(b.getAttribute("data-lang"));
+  });
+  document.getElementById("copy-day").addEventListener("click", function () {
+    var btn = this, live = document.getElementById("copy-live");
+    copyText(dayText(state.day)).then(function () {
+      clearTimeout(copyTimer);
+      btn.classList.add("done");
+      document.getElementById("copy-label").textContent = L().copied;
+      live.textContent = L().copied;
+      copyTimer = setTimeout(function () { copyTimer = 0; copyLabel(); live.textContent = ""; }, 2500);
+    }, function () {
+      document.getElementById("copy-label").textContent = L().copyFail;
+      live.textContent = L().copyFail;
+    });
   });
   document.getElementById("prev").addEventListener("click", function () { setDay(state.day - 1); });
   document.getElementById("next").addEventListener("click", function () { setDay(state.day + 1); });
