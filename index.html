@@ -276,6 +276,14 @@ h1 {
 .ev { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; transition: opacity .2s ease; }
 .ev-name { font-weight: 500; line-height: 1.35; }
 .ev-sub { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+.no-owner {
+  width: 46px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .04em;
+}
+.ev.arena .ev-name { font-weight: 400; }
 .kind {
   display: inline-block;
   margin-left: 6px;
@@ -526,12 +534,13 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
   ];
   // arena bosses from the timer app (README §6.3), not part of the joint loot: listed in the copied text without an owner
   var ARENA = [
-    { wds: [0, 1], t: "21:00", txt: "拉斯塔巴德-全區" },
-    { wds: [3], t: "20:00", txt: "地龍窟-安塔瑞斯" },
-    { wds: [4, 5], t: "18:00", txt: "黃昏山脈-古代巨人" },
-    { wds: [6], t: "21:00", txt: "風龍窟-迪亞勒" },
-    { wds: [6], t: "21:00", txt: "席琳聖所-扭曲的席琳" },
-    { wds: [6], t: "21:00", txt: "神界-梅塔特隆" }
+    // Korean names from official KR update notes (update_kr board)
+    { wds: [0, 1], t: "21:00", txt: "拉斯塔巴德-全區", name: { zh: "軍王、可利波斯", ko: "군왕, 크리퍼스" }, sub: { zh: "拉斯塔巴德全區", ko: "라스타바드 전 구역" } },
+    { wds: [3], t: "20:00", txt: "地龍窟-安塔瑞斯", name: { zh: "地龍安塔瑞斯", ko: "지룡 안타라스" }, sub: { zh: "地龍窟", ko: "지룡의 둥지" } },
+    { wds: [4, 5], t: "18:00", txt: "黃昏山脈-古代巨人", name: { zh: "古代巨人", ko: "에이션트 자이언트" }, sub: { zh: "黃昏山脈", ko: "황혼산맥" } },
+    { wds: [6], t: "21:00", txt: "風龍窟-迪亞勒", name: { zh: "墮落者迪亞勒", ko: "타락한 디아르" }, sub: { zh: "風龍窟", ko: "" } },
+    { wds: [6], t: "21:00", txt: "席琳聖所-扭曲的席琳", name: { zh: "扭曲的席琳", ko: "뒤틀린 실렌" }, sub: { zh: "席琳聖所", ko: "실렌의 성소" } },
+    { wds: [6], t: "21:00", txt: "神界-梅塔特隆", name: { zh: "梅塔特隆", ko: "메타트론" }, sub: { zh: "神界", ko: "신계" } }
   ];
   var ROWS = [
     { daily: true,
@@ -566,6 +575,9 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       otherTz: "韓",
       nextTag: "下一場", nowTag: "進行中",
       world: "世界",
+      arena: "競技場",
+      noOwner: "不列入",
+      noOwnerLabel: "不列入聯合拾取",
       owner: "負責",
       none: "無",
       tw: "台灣",
@@ -618,6 +630,9 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       otherTz: "대만",
       nextTag: "다음", nowTag: "진행 중",
       world: "월드",
+      arena: "기타",
+      noOwner: "제외",
+      noOwnerLabel: "연합 루팅 제외",
       owner: "담당",
       none: "없음",
       tw: "대만",
@@ -675,6 +690,9 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
     ];
     WORLD.forEach(function (u, k) {
       if (u.wd === wd) list.push({ t: u.t, name: u.name[lang], sub: u.row[lang] !== u.name[lang] ? u.row[lang] : "", g: W.world[k], world: true });
+    });
+    ARENA.forEach(function (a) {
+      if (a.wds.indexOf(wd) >= 0) list.push({ t: a.t, name: a.name[lang], sub: a.sub[lang], g: null, arena: true });
     });
     list.push({ t: "21:00", name: (wd === 1 || wd === 3 || wd === 5) ? E.matorTakun : E.matorPhoenix, sub: E.matorSub, g: D[wd] });
     list.push({ t: "15:00", name: E.garden, sub: E.gardenSub, g: D[wd] });
@@ -806,10 +824,11 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
         (k === nextIdx ? '<span class="next-tag">' + (mins(s.t) <= now.min ? t.nowTag : t.nextTag) + '</span>' : "") +
         '</div><div class="evs">';
       s.items.forEach(function (e) {
-        html += '<div class="ev' + chipCls(e.g) + '" data-g="' + e.g + '">' +
-          '<div><div class="ev-name">' + esc(e.name) + (e.world ? '<span class="kind">' + t.world + '</span>' : "") + '</div>' +
+        html += '<div class="ev' + chipCls(e.g) + (e.arena ? " arena" : "") + '"' + (e.g ? ' data-g="' + e.g + '"' : "") + '>' +
+          '<div><div class="ev-name">' + esc(e.name) + (e.world ? '<span class="kind">' + t.world + '</span>' : "") + (e.arena ? '<span class="kind">' + t.arena + '</span>' : "") + '</div>' +
           '<div class="ev-sub">' + esc(e.sub) + '</div></div>' +
-          '<div class="sigil" aria-label="' + t.owner + ' ' + e.g + '">' + e.g + '</div></div>';
+          (e.g ? '<div class="sigil" aria-label="' + t.owner + ' ' + e.g + '">' + e.g + '</div>'
+            : '<div class="no-owner" aria-label="' + t.noOwnerLabel + '">' + t.noOwner + '</div>') + '</div>';
       });
       html += "</div></li>";
     });
