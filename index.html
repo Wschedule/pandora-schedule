@@ -7,7 +7,7 @@
 <meta property="og:description" content="天堂W 首領聯合拾取班表">
 <style>:root{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>潘朵拉拾取班表</title>
-<meta name="description" content="天堂W 首領聯合拾取班表（2026/9/14–10/4 正式版）">
+<meta name="description" content="天堂W 首領聯合拾取班表（2026/10/5–11/1 主盟模式）">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@700;900&display=swap">
@@ -439,7 +439,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       <button type="button" id="lang-zh" data-lang="zh" lang="zh-Hant" aria-pressed="true">中文</button>
       <button type="button" id="lang-ko" data-lang="ko" lang="ko" aria-pressed="false">한국어</button>
     </div>
-    <span class="range num">2026 / 9/14 – 10/4</span>
+    <span class="range num">2026 / 10/5 – 11/1</span>
     <span data-t="tz">時間皆為台灣時間 · 韓國時間 +1 小時</span>
   </div>
 </header>
@@ -503,21 +503,21 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
 
 <script>
 (function () {
-  var START = Date.UTC(2026, 8, 14);
-  var NDAYS = 21;
+  // 2026/10 主盟模式（README §3.4）：由 tools/schedule_oct.py 產生
+  var START = Date.UTC(2026, 9, 5);
+  var NDAYS = 28;
   var WEEKS = [
-    { daily: ["03", "09", "01", "05", "02", "03", "06+07"], world: ["01", "06+07", "08", "05", "03", "02", "02", "03"] },
-    { daily: ["08", "09", "02", "03", "01", "05", "06+07"], world: ["02", "08", "09", "06+07", "01", "03", "03", "05"] },
-    { daily: ["02", "03", "08", "09", "01", "02", "03"], world: ["03", "02", "01", "02", "05", "08", "09", "06+07"] }
+    { daily: ["01", "02", "02", "02", "08", "01", "02"], world: ["02", "02", "02", "02", "01", "08", "08", "01"] },
+    { daily: ["02", "02", "08", "01", "02", "02", "02"], world: ["08", "02", "02", "02", "02", "01", "01", "02"] },
+    { daily: ["08", "01", "02", "02", "02", "08", "01"], world: ["01", "08", "02", "08", "02", "02", "02", "02"] },
+    { daily: ["02", "02", "02", "08", "01", "02", "02"], world: ["02", "01", "08", "01", "02", "02", "02", "02"] }
   ];
+  // 這季的分流（§2）：01 閃電、02 台灣主盟、08 姊姊
+  var CYCLE = ["01", "02", "02", "02", "08"];
   var GROUPS = [
-    { code: "01", zh: "台灣", ko: "대만" },
-    { code: "02", zh: "姐姐血盟 · 韓", ko: "한국" },
-    { code: "03", zh: "閃電血盟 · 韓", ko: "한국" },
-    { code: "05", zh: "台灣", ko: "대만" },
-    { code: "06+07", zh: "台灣 · 同一團", ko: "대만 · 한 팀" },
-    { code: "08", zh: "台灣", ko: "대만" },
-    { code: "09", zh: "台灣", ko: "대만" }
+    { code: "01", zh: "閃電血盟 · 韓", ko: "번개 · 한국" },
+    { code: "02", zh: "台灣主盟", ko: "대만 주맹" },
+    { code: "08", zh: "姊姊血盟 · 韓", ko: "언니 · 한국" }
   ];
   // world units: order matches WEEKS[].world; wd 0 = Mon; t = Taiwan time
   // Korean names from the official 09/09 KR update note; row names from the sheet
@@ -566,7 +566,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       copyFail: "無法自動複製，請改用電腦或其他瀏覽器",
       week: "一週總覽",
       weeks: "選擇週次",
-      tab: function (k) { return "第" + "二三四"[k] + "週"; },
+      tab: function (k) { return "第" + "一二三四"[k] + "週"; },
       caption: "每格是當天負責拾取的團",
       wdn: "一二三四五六日",
       wdPrefix: "週",
@@ -598,12 +598,12 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       mineDaily: "傲塔1-10、樂園+火龍窟 全天",
       mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + "，樂園 " + f("15:00") + " · " + f("22:00"); },
       ruleTitle: "怎麼輪的",
-      rule: "每隻首領都分 5 份：<span class=\"num\">02</span>、<span class=\"num\">03</span> 各 1 份，台灣方 3 份。傲塔／樂園每天走一格；世界首領每隻各自每週走一格，起點錯開。台灣位照 <span class=\"num\">01 → 05 → 06+07 → 08 → 09</span> 一直往下接。",
+      rule: "主盟在同一個世界，所以 10 月由主盟拾取大部分。每隻首領分 5 份：台灣主盟 <span class=\"num\">02</span> 拿 3 份，姊姊 <span class=\"num\">08</span>、閃電 <span class=\"num\">01</span> 各 1 份。一輪的順序是 <span class=\"num\">01 → 02 → 02 → 02 → 08</span>。傲塔／樂園每天走一格；世界首領每隻各自每週走一格，起點錯開。",
       patternLabel: "一輪 5 格",
       tallyTitle: "分配統計",
       tallyHead: ["團", "本週<br>傲塔/樂園", "本週<br>世界首領", "三週<br>傲塔/樂園", "三週<br>世界首領"],
       tallyNote: "傲塔/樂園以「天」計；世界首領以「隻」計，雙龍兩天分開算。",
-      footer: "資料來源：潘朵拉試算表「班表(新版)」分頁。9/7–9/13 那週沿用原表，不列入；10/5 起尚未排。試算表裡底比斯、提卡爾同一列，這裡照出現日拆成兩列。夢幻樂園對應公告的水、火、地、風精靈王，9/9 改版後是 15:00、22:00。"
+      footer: "2026/10 班表（10/5–11/1）。這季分流：01 閃電血盟（韓）、02 台灣主盟、08 姊姊血盟（韓）；其他分流這個月不列入。9 月是主盟不在、由台灣各團輪流的排法。試算表裡底比斯、提卡爾同一列，這裡照出現日拆成兩列。夢幻樂園對應公告的水、火、地、風精靈王，9/9 改版後是 15:00、22:00。"
     },
     ko: {
       doc: "판도라 루팅 순번표",
@@ -621,7 +621,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       copyFail: "자동 복사에 실패했습니다. 다른 브라우저로 시도해 주세요",
       week: "주간 일정",
       weeks: "주 선택",
-      tab: function (k) { return "9월 " + (k + 2) + "주"; },
+      tab: function (k) { return "10월 " + (k + 1) + "주"; },
       caption: "각 칸은 그날 루팅 담당 팀",
       wdn: "월화수목금토일",
       wdPrefix: "",
@@ -653,12 +653,12 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       mineDaily: "오만1~10층, 몽환의 낙원/마토르/피닉스 종일",
       mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + ", 낙원 " + f("15:00") + " · " + f("22:00"); },
       ruleTitle: "순번 규칙",
-      rule: "모든 보스는 5몫으로 나눕니다: <span class=\"num\">02</span>, <span class=\"num\">03</span> 각 1몫, 대만 측 3몫. 오만/낙원은 하루에 한 칸씩, 월드 보스는 보스마다 매주 한 칸씩 진행하며 시작 위치가 서로 다릅니다. 대만 몫은 <span class=\"num\">01 → 05 → 06+07 → 08 → 09</span> 순서로 계속 이어집니다.",
+      rule: "주맹이 같은 월드에 있어 10월은 주맹이 대부분을 루팅합니다. 모든 보스는 5몫으로 나눕니다: 대만 주맹 <span class=\"num\">02</span> 3몫, 언니 <span class=\"num\">08</span>·번개 <span class=\"num\">01</span> 각 1몫. 한 바퀴 순서는 <span class=\"num\">01 → 02 → 02 → 02 → 08</span>. 오만/낙원은 하루에 한 칸씩, 월드 보스는 보스마다 매주 한 칸씩 진행하며 시작 위치가 서로 다릅니다.",
       patternLabel: "한 바퀴 5칸",
       tallyTitle: "배분 통계",
       tallyHead: ["팀", "이번 주<br>오만/낙원", "이번 주<br>월드 보스", "3주 합계<br>오만/낙원", "3주 합계<br>월드 보스"],
       tallyNote: "오만/낙원은 일수, 월드 보스는 마리 수 기준. 드레이크 킹은 두 요일을 따로 셉니다.",
-      footer: "출처: 판도라 스프레드시트 「班表(新版)」 탭. 9/7–9/13 주는 기존 표를 그대로 써서 제외했고, 10/5부터는 아직 정해지지 않았습니다. 스프레드시트에서는 오시리스와 제브레퀴가 한 줄이지만 여기서는 출현 요일별로 나눴습니다. 몽환의 낙원은 공지의 물·불·땅·바람의 대정령이며, 09/09 업데이트 후 16:00, 23:00입니다."
+      footer: "2026년 10월 일정 (10/5–11/1). 이번 시즌 분류: 01 번개 혈맹(한국), 02 대만 주맹, 08 언니 혈맹(한국); 다른 분류는 이번 달 제외입니다. 9월은 주맹이 없어 대만 각 팀이 돌아가며 맡는 방식이었습니다. 스프레드시트에서는 오시리스와 제브레퀴가 한 줄이지만 여기서는 출현 요일별로 나눴습니다. 몽환의 낙원은 공지의 물·불·땅·바람의 대정령이며, 09/09 업데이트 후 16:00, 23:00입니다."
     }
   };
 
@@ -775,9 +775,8 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
     document.getElementById("rule-text").innerHTML = t.rule;
     var pat = document.getElementById("pattern");
     pat.setAttribute("aria-label", t.patternLabel);
-    pat.innerHTML = ["TW", "02", "03", "TW", "TW"].map(function (s, k) {
-      return s === "TW" ? "<span><small>" + (k + 1) + "</small>" + t.tw + "</span>"
-        : '<span class="chip" data-g="' + s + '"><small>' + (k + 1) + "</small>" + s + "</span>";
+    pat.innerHTML = CYCLE.map(function (s, k) {
+      return '<span class="chip" data-g="' + s + '"><small>' + (k + 1) + "</small>" + s + "</span>";
     }).join("");
     document.querySelector("#tally thead").innerHTML = "<tr>" + t.tallyHead.map(function (h, k) {
       return "<th" + (k === 3 ? ' class="grp"' : "") + ">" + h + "</th>";
