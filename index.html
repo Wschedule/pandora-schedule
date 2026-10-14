@@ -596,7 +596,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       mineHint: "在上方選一個團，就會列出這週輪到它的首領，表格也會只亮出它的格子。",
       mineNone: function (g) { return g + " 這週沒有輪到。"; },
       mineDaily: "傲塔1-10、樂園+火龍窟 全天",
-      mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + "，樂園 " + f("15:00") + " · " + f("22:00"); },
+      mineDailySub: function (f) { return f("19:05") + " · " + f("19:10") + " · " + f("21:00") + "，樂園 " + f("15:00") + " · " + f("22:00"); },
       ruleTitle: "怎麼輪的",
       rule: "主盟在同一個世界，所以 10 月由主盟拾取大部分。每隻首領分 5 份：台灣主盟 <span class=\"num\">02</span> 拿 3 份，姊姊 <span class=\"num\">08</span>、閃電 <span class=\"num\">01</span> 各 1 份。一輪的順序是 <span class=\"num\">01 → 02 → 02 → 02 → 08</span>。傲塔／樂園每天走一格；世界首領每隻各自每週走一格，起點錯開。",
       patternLabel: "一輪 5 格",
@@ -651,7 +651,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       mineHint: "위에서 팀을 선택하면 이번 주에 그 팀이 맡은 보스가 표시되고, 표에서도 해당 칸만 강조됩니다.",
       mineNone: function (g) { return g + " 이번 주 담당 없음."; },
       mineDaily: "오만1~10층, 몽환의 낙원/마토르/피닉스 종일",
-      mineDailySub: function (f) { return f("17:35") + " · " + f("19:10") + " · " + f("21:00") + ", 낙원 " + f("15:00") + " · " + f("22:00"); },
+      mineDailySub: function (f) { return f("19:05") + " · " + f("19:10") + " · " + f("21:00") + ", 낙원 " + f("15:00") + " · " + f("22:00"); },
       ruleTitle: "순번 규칙",
       rule: "주맹이 같은 월드에 있어 10월은 주맹이 대부분을 루팅합니다. 모든 보스는 5몫으로 나눕니다: 대만 주맹 <span class=\"num\">02</span> 3몫, 언니 <span class=\"num\">08</span>·번개 <span class=\"num\">01</span> 각 1몫. 한 바퀴 순서는 <span class=\"num\">01 → 02 → 02 → 02 → 08</span>. 오만/낙원은 하루에 한 칸씩, 월드 보스는 보스마다 매주 한 칸씩 진행하며 시작 위치가 서로 다릅니다.",
       patternLabel: "한 바퀴 5칸",
@@ -685,7 +685,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
   function events(i) {
     var w = Math.floor(i / 7), wd = i % 7, W = WEEKS[w], D = W.daily, E = L().ev, lang = state.lang;
     var list = [
-      { t: "17:35", name: E.odd, sub: E.oddSub, g: D[wd] },
+      { t: "19:05", name: E.odd, sub: E.oddSub, g: D[wd] },
       { t: "19:10", name: E.even, sub: E.evenSub, g: D[wd] }
     ];
     WORLD.forEach(function (u, k) {
@@ -706,7 +706,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
     var W = WEEKS[Math.floor(i / 7)], wd = i % 7, g = W.daily[wd];
     function own(c) { return "👉" + c + "👈"; }
     var blocks = [
-      { t: "17:35", text: "🔸傲慢之塔1、3、5、7、9\n⏰(17:35)" + own(g) },
+      { t: "19:05", text: "🔸傲慢之塔1、3、5、7、9\n⏰(19:05)" + own(g) },
       { t: "19:10", text: "🔸傲慢之塔2、4、6、8、10\n⏰(19:10)" + own(g) }
     ];
     var byTime = {};
