@@ -7,7 +7,7 @@
 <meta property="og:description" content="天堂W 首領聯合拾取班表">
 <style>:root{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>潘朵拉拾取班表</title>
-<meta name="description" content="天堂W 首領聯合拾取班表（2026/10/5–11/1 主盟模式）">
+<meta name="description" content="天堂W 首領聯合拾取班表（2026/11/2–11/29 主盟模式）">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@700;900&display=swap">
@@ -439,7 +439,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       <button type="button" id="lang-zh" data-lang="zh" lang="zh-Hant" aria-pressed="true">中文</button>
       <button type="button" id="lang-ko" data-lang="ko" lang="ko" aria-pressed="false">한국어</button>
     </div>
-    <span class="range num">2026 / 10/5 – 11/1</span>
+    <span class="range num">2026 / 11/2 – 11/29</span>
     <span data-t="tz">時間皆為台灣時間 · 韓國時間 +1 小時</span>
   </div>
 </header>
@@ -503,14 +503,14 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
 
 <script>
 (function () {
-  // 2026/10 主盟模式（README §3.4）：由 tools/schedule_oct.py 產生
-  var START = Date.UTC(2026, 9, 5);
+  // 2026/11 主盟模式（README §3.4）：由 tools/schedule_nov.py 產生
+  var START = Date.UTC(2026, 10, 2);
   var NDAYS = 28;
   var WEEKS = [
+    { daily: ["02", "08", "01", "02", "02", "02", "08"], world: ["02", "02", "01", "02", "08", "02", "02", "08"] },
     { daily: ["01", "02", "02", "02", "08", "01", "02"], world: ["02", "02", "02", "02", "01", "08", "08", "01"] },
     { daily: ["02", "02", "08", "01", "02", "02", "02"], world: ["08", "02", "02", "02", "02", "01", "01", "02"] },
-    { daily: ["08", "01", "02", "02", "02", "08", "01"], world: ["01", "08", "02", "08", "02", "02", "02", "02"] },
-    { daily: ["02", "02", "02", "08", "01", "02", "02"], world: ["02", "01", "08", "01", "02", "02", "02", "02"] }
+    { daily: ["08", "01", "02", "02", "02", "08", "01"], world: ["01", "08", "02", "08", "02", "02", "02", "02"] }
   ];
   // 這季的分流（§2）：01 閃電、02 台灣主盟、08 姊姊
   var CYCLE = ["01", "02", "02", "02", "08"];
@@ -605,7 +605,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       tallyTitle: "分配統計",
       tallyHead: ["團", "本週<br>傲塔/樂園", "本週<br>世界首領", "三週<br>傲塔/樂園", "三週<br>世界首領"],
       tallyNote: "傲塔/樂園以「天」計；世界首領以「隻」計，雙龍兩天分開算。",
-      footer: "2026/10 班表（10/5–11/1）。這季分流：01 閃電血盟（韓）、02 台灣主盟、08 姊姊血盟（韓）；其他分流這個月不列入。9 月是主盟不在、由台灣各團輪流的排法。試算表裡底比斯、提卡爾同一列，這裡照出現日拆成兩列。時間照官方指南「每週首領日程說明」的變更日程，**2026/11/04 改版後**（指南寫韓國時間，這裡減 1 小時）。夢幻樂園對應指南的水／火／地／風精靈王。"
+      footer: "2026/11 班表（11/2–11/29）。這季分流：01 閃電血盟（韓）、02 台灣主盟、08 姊姊血盟（韓）；其他分流這個月不列入。接續 10 月的輪替位置；9 月是主盟不在、由台灣各團輪流的排法。試算表裡底比斯、提卡爾同一列，這裡照出現日拆成兩列。時間照官方指南「每週首領日程說明」的變更日程，**2026/11/04 改版後**（指南寫韓國時間，這裡減 1 小時）。夢幻樂園對應指南的水／火／地／風精靈王。"
     },
     ko: {
       doc: "판도라 루팅 순번표",
@@ -623,7 +623,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       copyFail: "자동 복사에 실패했습니다. 다른 브라우저로 시도해 주세요",
       week: "주간 일정",
       weeks: "주 선택",
-      tab: function (k) { return "10월 " + (k + 1) + "주"; },
+      tab: function (k) { return "11월 " + (k + 1) + "주"; },
       caption: "각 칸은 그날 루팅 담당 팀",
       wdn: "월화수목금토일",
       wdPrefix: "",
@@ -662,7 +662,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       tallyTitle: "배분 통계",
       tallyHead: ["팀", "이번 주<br>오만/낙원", "이번 주<br>월드 보스", "3주 합계<br>오만/낙원", "3주 합계<br>월드 보스"],
       tallyNote: "오만/낙원은 일수, 월드 보스는 마리 수 기준. 드레이크 킹은 두 요일을 따로 셉니다.",
-      footer: "2026년 10월 일정 (10/5–11/1). 이번 시즌 분류: 01 번개 혈맹(한국), 02 대만 주맹, 08 언니 혈맹(한국); 다른 분류는 이번 달 제외입니다. 9월은 주맹이 없어 대만 각 팀이 돌아가며 맡는 방식이었습니다. 스프레드시트에서는 오시리스와 제브레퀴가 한 줄이지만 여기서는 출현 요일별로 나눴습니다. 시간은 공식 가이드 「주간 보스 일정」의 변경 일정 기준이며 **2026/11/04 업데이트 이후** 시간입니다. 몽환의 낙원은 가이드의 물·불·땅·바람의 대정령입니다."
+      footer: "2026년 11월 일정 (11/2–11/29). 이번 시즌 분류: 01 번개 혈맹(한국), 02 대만 주맹, 08 언니 혈맹(한국); 다른 분류는 이번 달 제외입니다. 10월 순번을 이어서 진행합니다. 9월은 주맹이 없어 대만 각 팀이 돌아가며 맡는 방식이었습니다. 스프레드시트에서는 오시리스와 제브레퀴가 한 줄이지만 여기서는 출현 요일별로 나눴습니다. 시간은 공식 가이드 「주간 보스 일정」의 변경 일정 기준이며 **2026/11/04 업데이트 이후** 시간입니다. 몽환의 낙원은 가이드의 물·불·땅·바람의 대정령입니다."
     }
   };
 
