@@ -532,15 +532,23 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
     { wd: 5, t: "20:00", name: { zh: "亞力安王", ko: "코카트리스 킹" }, row: { zh: "遺忘-雞", ko: "코카킹" }, txt: "遺忘之島-亞力安王" },
     { wd: 6, t: "20:00", name: { zh: "巨大牛人", ko: "그레이트 미노타우루스" }, row: { zh: "遺忘-牛", ko: "미노킹" }, txt: "遺忘之島-巨大牛人" }
   ];
-  // arena bosses from the timer app (README §6.3), not part of the joint loot: listed in the copied text without an owner
+  // arena bosses (official guidebook, README §6.0) — not part of the joint loot:
+  // shown as 競技場／不列入 with no owner, and listed in the copied text with a blue diamond.
+  // zh + ko names and times from the KR guidebook (KST − 1 hour = Taiwan time); sub = map
   var ARENA = [
-    // Korean names from official KR update notes (update_kr board)
-    { wds: [0, 1], t: "21:00", txt: "拉斯塔巴德-全區", name: { zh: "軍王、可利波斯", ko: "군왕, 크리퍼스" }, sub: { zh: "拉斯塔巴德全區", ko: "라스타바드 전 구역" } },
-    { wds: [4], t: "22:00", txt: "地龍窟-安塔瑞斯", name: { zh: "地龍安塔瑞斯、地龍守護騎士", ko: "지룡 안타라스, 지룡 수호 기사" }, sub: { zh: "地龍窟", ko: "지룡의 둥지" } },
+    { wds: [0, 1], t: "21:00", txt: "拉斯塔巴德-全區", name: { zh: "軍王、亡靈可利波斯", ko: "군왕, 망령 크리퍼스" }, sub: { zh: "拉斯塔巴德全區 · 30 分內隨機", ko: "라스타바드 전 구역 · 30분 내 랜덤" } },
+    { wds: [2], t: "21:00", txt: "封桃仙國-狂神夜、霧華", name: { zh: "狂神夜、霧華", ko: "광신야, 무화" }, sub: { zh: "封桃仙國（百陰寺／無極恕月）", ko: "" } },
+    { wds: [2], t: "22:00", txt: "深淵-守門人拉克沙爾", name: { zh: "守門人拉克沙爾", ko: "게이트 키퍼 락샤르" }, sub: { zh: "深淵－滅亡之城", ko: "심연" } },
+    { wds: [3], t: "21:00", txt: "前哨基地-巴爾加勒、貝格拉斯、血腥龍", name: { zh: "巴爾加勒、貝格拉斯、血腥龍", ko: "전초기지 대장 발가르, 폭주한 벨그라스, 블러드 드래곤" }, sub: { zh: "前哨基地 · 11/4 新登場", ko: "전초기지" } },
+    { wds: [3], t: "22:00", txt: "深淵-菈特莫爾", name: { zh: "菈特莫爾", ko: "라트모르" }, sub: { zh: "深淵－深淵奈落", ko: "심연" } },
     { wds: [4, 5], t: "18:00", txt: "黃昏山脈-古代巨人", name: { zh: "古代巨人", ko: "에이션트 자이언트" }, sub: { zh: "黃昏山脈", ko: "황혼산맥" } },
-    { wds: [6], t: "22:00", txt: "風龍窟-迪亞勒", name: { zh: "墮落者迪亞勒、林德拜爾", ko: "타락한 디아르, 린드비오르" }, sub: { zh: "風龍窟", ko: "풍룡의 둥지" } },
-    { wds: [6], t: "22:00", txt: "席琳聖所-扭曲的席琳", name: { zh: "扭曲的席琳", ko: "뒤틀린 실렌" }, sub: { zh: "席琳聖所", ko: "실렌의 성소" } },
-    { wds: [5], t: "22:00", txt: "神界-梅塔特隆", name: { zh: "梅塔特隆", ko: "메타트론" }, sub: { zh: "神界", ko: "신계" } }
+    { wds: [4], t: "21:00", txt: "水龍窟-法利昂", name: { zh: "法利昂", ko: "파푸리온" }, sub: { zh: "水龍窟－沉沒的寺院", ko: "수룡의 둥지" } },
+    { wds: [4], t: "22:00", txt: "地龍窟-安塔瑞斯", name: { zh: "地龍安塔瑞斯、地龍守護騎士", ko: "안타라스, 지룡의 수호기사" }, sub: { zh: "地龍窟", ko: "지룡의 둥지" } },
+    { wds: [5], t: "21:00", txt: "艾奇德娜、鐮刀死神、支配的先知", name: { zh: "艾奇德娜、鐮刀死神、支配的先知", ko: "에키드나, 그림 리퍼, 지배의 오라클" }, sub: { zh: "支配之塔／傲慢之塔頂層", ko: "지배의 탑 · 오만의 탑" } },
+    { wds: [5], t: "22:00", txt: "神界-梅塔特隆", name: { zh: "梅塔特隆", ko: "메타트론" }, sub: { zh: "神界", ko: "신계" } },
+    { wds: [6], t: "21:00", txt: "[傳統]克特、[傳統]巴風特", name: { zh: "[傳統] 克特、[傳統] 巴風特", ko: "[헤리티지] 커츠, [헤리티지] 바포메트" }, sub: { zh: "傳統首領", ko: "헤리티지 보스" } },
+    { wds: [6], t: "22:00", txt: "風龍窟-迪亞勒", name: { zh: "墮落者迪亞勒、林德拜爾", ko: "타락자 디아르, 린드비오르" }, sub: { zh: "風龍窟", ko: "풍룡의 둥지" } },
+    { wds: [6], t: "22:00", txt: "席琳聖所-扭曲的席琳", name: { zh: "扭曲的席琳", ko: "뒤틀린 실렌" }, sub: { zh: "席琳聖所", ko: "실렌의 성소" } }
   ];
   var ROWS = [
     { daily: true,
@@ -632,7 +640,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       otherTz: "대만",
       nextTag: "다음", nowTag: "진행 중",
       world: "월드",
-      arena: "기타",
+      arena: "아레나",
       noOwner: "제외",
       noOwnerLabel: "연합 루팅 제외",
       owner: "담당",
@@ -833,7 +841,7 @@ footer p { margin: 0; padding-top: 16px; border-top: 1px solid var(--rule); font
       s.items.forEach(function (e) {
         html += '<div class="ev' + chipCls(e.g) + (e.arena ? " arena" : "") + '"' + (e.g ? ' data-g="' + e.g + '"' : "") + '>' +
           '<div><div class="ev-name">' + esc(e.name) + (e.world ? '<span class="kind">' + t.world + '</span>' : "") + (e.arena ? '<span class="kind">' + t.arena + '</span>' : "") + '</div>' +
-          '<div class="ev-sub">' + esc(e.sub) + '</div></div>' +
+          (e.sub ? '<div class="ev-sub">' + esc(e.sub) + '</div>' : "") + '</div>' +
           (e.g ? '<div class="sigil" aria-label="' + t.owner + ' ' + e.g + '">' + e.g + '</div>'
             : '<div class="no-owner" aria-label="' + t.noOwnerLabel + '">' + t.noOwner + '</div>') + '</div>';
       });
